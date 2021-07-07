@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IPaUIKitHelper'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of IPaUIKitHelper.'
+  s.version          = '1.0'
+  s.summary          = 'as Name , this is a UIKit helper, there some helper function for easily use with UIKit'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,17 +21,17 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/IPa Chen/IPaUIKitHelper'
+  s.homepage         = 'https://github.com/ipapamagic/IPaUIKitHelper'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'IPa Chen' => 'ipapamagic@gmail.com' }
-  s.source           = { :git => 'https://github.com/IPa Chen/IPaUIKitHelper.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/ipapamagic/IPaUIKitHelper.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '11.0'
 
   s.source_files = 'IPaUIKitHelper/Classes/**/*'
-  
+  s.dependency 'IPaLog', '~> 3.0'
   # s.resource_bundles = {
   #   'IPaUIKitHelper' => ['IPaUIKitHelper/Assets/*.png']
   # }
