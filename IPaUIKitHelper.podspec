@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'IPaUIKitHelper/Classes/**/*'
+  
   s.dependency 'IPaLog', '~> 3.0'
   # s.resource_bundles = {
   #   'IPaUIKitHelper' => ['IPaUIKitHelper/Assets/*.png']
@@ -39,4 +39,25 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
+  s.subspec 'IPaUIKitHelper' do |sp|
+    s.source_files = 'IPaUIKitHelper/Classes/IPaUIKitHelper/*'
+    s.dependency 'IPaImageTool', '~> 2.3'
+  end
+  s.subspec 'IPaImageURL' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaImageURL/*'
+    s.dependency 'IPaDownloadManager', '~> 1.3'
+    s.dependency 'IPaFileCache', '~> 1.0'
+  end
+  s.subspec 'IPaButtonStyler' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaButtonStyler/*'
+  end
+  s.subspec 'IPaNestedScrollView' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaNestedScrollView/*'
+  end
+  s.subspec 'IPaFitContent' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaFitContent/*'
+  end
+  s.subspec 'IPaUIKit' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaUIKit/*'
+  end
 end
