@@ -116,13 +116,15 @@ extension WKWebView {
         //Add message handler reference
         self.configuration.userContentController.add(handler, name: messageName)
     }
+    @inlinable open func injectTextSizeAdjust(_ ratio:Float) {
+        let js = "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='\(ratio * 100)%'"
+        self.injectJS(js)
+    }
     @inlinable open func injectFitContentJS() {
         //fit content size script
-        let metaSource = "var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width initial-scale=1'); document.getElementsByTagName('head')[0].appendChild(meta);"
+        let js = "var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width initial-scale=1'); document.getElementsByTagName('head')[0].appendChild(meta);"
         //Content Controller object
-        let controller = self.configuration.userContentController
-        let metaScript = WKUserScript(source: metaSource, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        self.injectJS(js)
         
-        controller.addUserScript(metaScript)
     }
 }

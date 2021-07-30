@@ -10,6 +10,9 @@ import IPaImageTool
 import ObjectiveC
 
 private var shadowSpreadHandle: UInt8 = 0
+private var roundCornerHandle: UInt8 = 0
+private var borderHandle: UInt8 = 0
+private var sizeObserverHandle: UInt8 = 0
 extension UIView {
     
     @IBInspectable public var maskToBounds:Bool {
@@ -208,9 +211,78 @@ extension UIView {
     }
     open func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let cornerMask = CAShapeLayer()
+        let cornerMask = objc_getAssociatedObject(self, &roundCornerHandle) as? CAShapeLayer ?? CAShapeLayer()
+
         cornerMask.path = path.cgPath
         layer.mask = cornerMask
+        
+        objc_setAssociatedObject(self, &roundCornerHandle, cornerMask, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        
     }
-   
+    func addSizeObserver() {
+        if let _ = objc_getAssociatedObject(self, &sizeObserverHandle) {
+            return
+        }
+        let sizeObserver = self.observe(\.bounds) { view, value in
+            if let cornerMaskLayer = objc_getAssociatedObject(self, &roundCornerHandle) as? CAShapeLayer {
+                cornerMaskLayer.bounds = view.bounds
+            }
+            if let borderLayer = objc_getAssociatedObject(self, &borderHandle) as? CAShapeLayer {
+                borderLayer.bounds = view.bounds
+            }
+        }
+        objc_setAssociatedObject(self, &sizeObserverHandle, sizeObserver, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+    @inlinable open func addBorder(_ edge:UIRectEdge,width:CGFloat,color:UIColor)  {
+        
+        self.addBorder([edge], width: width, color: color)
+        
+    }
+    open func addBorder(_ edges:[UIRectEdge],width:CGFloat,color:UIColor) {
+        
+        var path = UIBezierPath()
+        let vSize = CGSize(width: self.bounds.width, height: 1)
+        let hSize = CGSize(width: 1, height: self.bounds.height)
+        
+        func addPath(_ edge:UIRectEdge,path:UIBezierPath) -> UIBezierPath {
+            switch edge {
+            case .top:
+                let rect = UIBezierPath(rect: CGRect(origin: .zero, size: vSize))
+                path.append(rect)
+            case .bottom:
+                let rect = UIBezierPath(rect: CGRect(origin: CGPoint(x: 0, y: self.bounds.height - width), size: vSize))
+                path.append(rect)
+            case .left:
+                let rect = UIBezierPath(rect: CGRect(origin: .zero, size: hSize))
+                path.append(rect)
+            case .right:
+                let rect = UIBezierPath(rect: CGRect(origin: CGPoint(x: self.bounds.width - width, y: 0), size: hSize))
+                path.append(rect)
+            default:
+                break
+            }
+            return path
+        }
+        
+        
+        for edge in edges {
+            if edge == .all {
+                for e in [UIRectEdge.top,UIRectEdge.bottom,UIRectEdge.left,UIRectEdge.right] {
+                    path = addPath(e, path: path)
+                }
+            }
+            else {
+                path = addPath(edge, path: path)
+            }
+        }
+        
+        let borderShapeLayer = objc_getAssociatedObject(self, &borderHandle) as? CAShapeLayer ?? CAShapeLayer()
+
+        objc_setAssociatedObject(self, &borderHandle, borderShapeLayer, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        
+        borderShapeLayer.path = path.cgPath
+        borderShapeLayer.fillColor = color.cgColor
+        self.layer.addSublayer(borderShapeLayer)
+        
+    }
 }

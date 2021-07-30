@@ -40,13 +40,13 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   s.subspec 'IPaUIKitHelper' do |sp|
-    s.source_files = 'IPaUIKitHelper/Classes/IPaUIKitHelper/*'
-    s.dependency 'IPaImageTool', '~> 2.3'
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaUIKitHelper/*'
+    sp.dependency 'IPaImageTool', '~> 2.3'
   end
   s.subspec 'IPaImageURL' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaImageURL/*'
-    s.dependency 'IPaDownloadManager', '~> 1.3'
-    s.dependency 'IPaFileCache', '~> 1.0'
+    sp.dependency 'IPaDownloadManager', '~> 1.3'
+    sp.dependency 'IPaFileCache', '~> 1.0'
   end
   s.subspec 'IPaButtonStyler' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaButtonStyler/*'

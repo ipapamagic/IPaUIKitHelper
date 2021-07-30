@@ -85,7 +85,10 @@ open class IPaFitContentWebView: WKWebView {
         super.init(coder: coder)
         self.initialJSScript()
     }
-    func initialJSScript() {
+    open func initialJSScript() {
+        self.configuration.userContentController.removeAllUserScripts()
+        self.configuration.userContentController.removeScriptMessageHandler(forName: "sizeNotification")
+        
         self.injectFitContentJS()
         self.injectContentResizeJS(handler: self, messageName: "sizeNotification")
         self.scrollView.isScrollEnabled = false
