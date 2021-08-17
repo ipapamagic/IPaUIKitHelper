@@ -116,9 +116,14 @@ extension WKWebView {
         //Add message handler reference
         self.configuration.userContentController.add(handler, name: messageName)
     }
+    @inlinable open func textSizeJS(for ratio:Float) -> String {
+        return "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='\(ratio * 100)%'"
+    }
+    @inlinable open func setJSTextSizeAdjust(_ ratio:Float,complete:((Any?,Error?)->Void)? = nil) {
+        self.evaluateJavaScript(self.textSizeJS(for:ratio), completionHandler: complete)
+    }
     @inlinable open func injectTextSizeAdjust(_ ratio:Float) {
-        let js = "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='\(ratio * 100)%'"
-        self.injectJS(js)
+        self.injectJS(self.textSizeJS(for:ratio))
     }
     @inlinable open func injectFitContentJS() {
         //fit content size script
