@@ -109,7 +109,7 @@ extension WKWebView {
         self.configuration.userContentController.add(handler, name: messageName)
     }
     @inlinable open func injectContentResizeJS(handler:WKScriptMessageHandler,messageName:String) {
-        let source = "window.addEventListener(\"load\", function () {window.webkit.messageHandlers.\(messageName).postMessage({justLoaded:true,height: document.body.scrollHeight});}, false);  document.body.addEventListener( 'resize', incrementCounter); function incrementCounter() {window.webkit.messageHandlers.\(messageName).postMessage({height: document.body.scrollHeight});};"
+        let source = "window.addEventListener(\"load\", function () {window.webkit.messageHandlers.\(messageName).postMessage({justLoaded:true,height: document.body.scrollHeight});}, false);  document.body.addEventListener( 'resize', onSizeChangeEvent); function onSizeChangeEvent() {window.webkit.messageHandlers.\(messageName).postMessage({height: document.body.scrollHeight});};"
         
         self.injectJS(source)
         
@@ -117,10 +117,12 @@ extension WKWebView {
         self.configuration.userContentController.add(handler, name: messageName)
     }
     @inlinable open func textSizeJS(for ratio:Float) -> String {
-        return "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='\(ratio * 100)%; window.dispatchEvent(new Event('resize'));'"
+        return "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust = '\(ratio * 100)%'; if (typeof onSizeChangeEvent === \"function\") {onSizeChangeEvent()};"
     }
-    @inlinable open func setJSTextSizeAdjust(_ ratio:Float,complete:((Any?,Error?)->Void)? = nil) {
-        self.evaluateJavaScript(self.textSizeJS(for:ratio), completionHandler: complete)
+    @objc open func setJSTextSizeAdjust(_ ratio:Float,complete:((Any?,Error?)->Void)? = nil) {
+        self.evaluateJavaScript(self.textSizeJS(for:ratio)) { result, error in
+            complete?(result,error)
+        }
     }
     @inlinable open func injectTextSizeAdjust(_ ratio:Float) {
         self.injectJS(self.textSizeJS(for:ratio))

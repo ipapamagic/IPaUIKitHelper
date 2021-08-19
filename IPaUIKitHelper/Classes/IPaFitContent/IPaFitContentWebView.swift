@@ -109,7 +109,11 @@ open class IPaFitContentWebView: WKWebView {
         return CGSize(width:self.scrollView.contentSize.width,height:contentHeight)
         
     }
-
+    open override func setJSTextSizeAdjust(_ ratio: Float, complete: ((Any?, Error?) -> Void)? = nil) {
+        self.contentHeight = 1
+        self.fitContentWebViewContainer?.onWebViewContentSizeUpdate(self)
+        super.setJSTextSizeAdjust(ratio ,complete: complete)
+    }
   
 
 }
