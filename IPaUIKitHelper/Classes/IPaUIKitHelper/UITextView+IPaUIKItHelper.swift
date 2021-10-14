@@ -8,6 +8,14 @@
 import UIKit
 
 extension UITextView {
+    @IBInspectable public var textPadding:CGFloat {
+        get {
+            return self.textContainer.lineFragmentPadding
+        }
+        set {
+            self.textContainer.lineFragmentPadding = newValue
+        }
+    }
     @IBInspectable public var bottomInset: CGFloat {
         get {
             return textContainerInset.bottom
