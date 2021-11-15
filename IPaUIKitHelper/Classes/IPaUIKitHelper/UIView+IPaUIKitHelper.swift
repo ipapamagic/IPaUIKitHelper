@@ -87,6 +87,7 @@ extension UIView {
                 self.layer.shadowPath = UIBezierPath(rect: rect).cgPath
                 
                 self.layer.contentsScale = UIScreen.main.scale
+                self.addSizeObserver()
             }
         }
     }
@@ -217,7 +218,7 @@ extension UIView {
         layer.mask = cornerMask
         
         objc_setAssociatedObject(self, &roundCornerHandle, cornerMask, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
-        
+        self.addSizeObserver()
     }
     func addSizeObserver() {
         if let _ = objc_getAssociatedObject(self, &sizeObserverHandle) {
@@ -229,6 +230,9 @@ extension UIView {
             }
             if let borderLayer = objc_getAssociatedObject(self, &borderHandle) as? CAShapeLayer {
                 borderLayer.bounds = view.bounds
+            }
+            if let shadowSpread = objc_getAssociatedObject(self, &shadowSpreadHandle) as? CGFloat {
+                self.shadowSpread = shadowSpread
             }
         }
         objc_setAssociatedObject(self, &sizeObserverHandle, sizeObserver, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -283,6 +287,15 @@ extension UIView {
         borderShapeLayer.path = path.cgPath
         borderShapeLayer.fillColor = color.cgColor
         self.layer.addSublayer(borderShapeLayer)
+        self.addSizeObserver()
         
+    }
+    open func addSubview(_ view:UIView,edgeInsects:UIEdgeInsets) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsects.top).isActive = true
+        view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: edgeInsects.bottom).isActive = true
+        view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsects.left).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: edgeInsects.right).isActive = true
+        self.addSubview(view)
     }
 }
