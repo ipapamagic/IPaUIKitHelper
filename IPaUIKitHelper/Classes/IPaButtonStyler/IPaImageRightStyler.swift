@@ -10,8 +10,8 @@ open class IPaImageRightStyler:IPaButtonStyler {
     @IBInspectable open var centerSpace: CGFloat = 0
     @IBInspectable open var leftSpace: CGFloat = 0
     @IBInspectable open var rightSpace: CGFloat = 0
-    open override func reloadStyle() {
-        guard let button = button, let imageView = button.imageView,let image = imageView.image,let titleLabel = button.titleLabel,let text = titleLabel.text,let font = button.titleLabel?.font else {
+    open override func reloadStyle(_ button: UIButton) {
+        guard let imageView = button.imageView,let image = imageView.image,let titleLabel = button.titleLabel,let text = titleLabel.text,let font = button.titleLabel?.font else {
             return
         }
         let textLabelWidth = button.bounds.width - image.size.width - leftSpace - rightSpace

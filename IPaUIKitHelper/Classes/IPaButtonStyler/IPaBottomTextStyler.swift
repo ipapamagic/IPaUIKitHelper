@@ -9,8 +9,8 @@ import UIKit
 
 open class IPaBottomTextStyler:IPaButtonStyler {
     @IBInspectable open var centerSpace: CGFloat = 0
-    open override func reloadStyle() {
-        guard let button = button,let imageView = button.imageView,let titleLabel = button.titleLabel,let titleText = titleLabel.text else {
+    open override func reloadStyle(_ button: UIButton) {
+        guard let imageView = button.imageView,let titleLabel = button.titleLabel,let titleText = titleLabel.text else {
             return
         }
         let imageSize = imageView.frame.size

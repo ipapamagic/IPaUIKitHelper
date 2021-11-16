@@ -10,8 +10,8 @@ import UIKit
 class IPaImageTopStyler: IPaButtonStyler {
     @IBInspectable open var centerSpace: CGFloat = 0
     @IBInspectable open var topSpace: CGFloat = 0
-    open override func reloadStyle() {
-        guard let button = button,let imageView = button.imageView,let titleLabel = button.titleLabel,let titleText = titleLabel.text else {
+    open override func reloadStyle(_ button: UIButton) {
+        guard let imageView = button.imageView,let titleLabel = button.titleLabel,let titleText = titleLabel.text else {
             return
         }
         let imageSize = imageView.frame.size
