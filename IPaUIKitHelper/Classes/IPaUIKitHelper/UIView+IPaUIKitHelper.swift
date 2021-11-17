@@ -228,8 +228,8 @@ extension UIView {
             if let cornerMaskLayer = objc_getAssociatedObject(self, &roundCornerHandle) as? CAShapeLayer {
                 cornerMaskLayer.bounds = view.bounds
             }
-            if let borderLayer = objc_getAssociatedObject(self, &borderHandle) as? CAShapeLayer {
-                borderLayer.bounds = view.bounds
+            if let (_,edges,width,color) = objc_getAssociatedObject(self, &borderHandle) as? (CAShapeLayer,[UIRectEdge],CGFloat,UIColor) {
+                self.setBorder(edges, width: width, color: color)
             }
             if let shadowSpread = objc_getAssociatedObject(self, &shadowSpreadHandle) as? CGFloat {
                 self.shadowSpread = shadowSpread
@@ -237,12 +237,12 @@ extension UIView {
         }
         objc_setAssociatedObject(self, &sizeObserverHandle, sizeObserver, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
-    @inlinable open func addBorder(_ edge:UIRectEdge,width:CGFloat,color:UIColor)  {
+    @inlinable open func setBorder(_ edge:UIRectEdge,width:CGFloat,color:UIColor)  {
         
-        self.addBorder([edge], width: width, color: color)
+        self.setBorder([edge], width: width, color: color)
         
     }
-    open func addBorder(_ edges:[UIRectEdge],width:CGFloat,color:UIColor) {
+    open func setBorder(_ edges:[UIRectEdge],width:CGFloat,color:UIColor) {
         
         var path = UIBezierPath()
         let vSize = CGSize(width: self.bounds.width, height: 1)
@@ -280,12 +280,13 @@ extension UIView {
             }
         }
         
-        let borderShapeLayer = objc_getAssociatedObject(self, &borderHandle) as? CAShapeLayer ?? CAShapeLayer()
-
-        objc_setAssociatedObject(self, &borderHandle, borderShapeLayer, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        let (borderShapeLayer,_,_,_) = objc_getAssociatedObject(self, &borderHandle) as? (CAShapeLayer,[UIRectEdge],CGFloat,UIColor) ?? (CAShapeLayer(),[UIRectEdge](),0,.black)
+        
+        objc_setAssociatedObject(self, &borderHandle, (borderShapeLayer,edges,width,color), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         borderShapeLayer.path = path.cgPath
         borderShapeLayer.fillColor = color.cgColor
+//        borderShapeLayer.bounds = self.layer.bounds
         self.layer.addSublayer(borderShapeLayer)
         self.addSizeObserver()
         
