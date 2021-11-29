@@ -293,10 +293,11 @@ extension UIView {
     }
     open func addSubview(_ view:UIView,edgeInsects:UIEdgeInsets) {
         view.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(view)
         view.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsects.top).isActive = true
         view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: edgeInsects.bottom).isActive = true
         view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsects.left).isActive = true
         view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: edgeInsects.right).isActive = true
-        self.addSubview(view)
+        
     }
 }

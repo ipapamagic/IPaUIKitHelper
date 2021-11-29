@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 public protocol IPaNestedScrollViewInner:UIGestureRecognizerDelegate  {
     
     var targetScrollView:UIScrollView {get}
@@ -45,6 +46,18 @@ open class IPaNestedInnerTableView:UITableView ,IPaNestedScrollViewInner {
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return simultaneouslyOtherGesture
+    }
+}
+open class IPaNestedInnerWebView:WKWebView,IPaNestedScrollViewInner {
+    public var simultaneouslyOtherGesture:Bool = false
+    public var targetScrollView:UIScrollView {
+        get {
+            return self.scrollView
+        }
+    }
+    
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return simultaneouslyOtherGesture
     }
