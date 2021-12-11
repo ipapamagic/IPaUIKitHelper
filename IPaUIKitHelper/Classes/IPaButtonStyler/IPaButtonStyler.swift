@@ -8,7 +8,7 @@
 import UIKit
 import ObjectiveC
 private var textObserverHandle: UInt8 = 0
-private var frameObserverHandle: UInt8 = 0
+private var boundsObserverHandle: UInt8 = 0
 private var imageObserverHandle: UInt8 = 0
 open class IPaButtonStyler:NSObject {
     
@@ -41,12 +41,12 @@ extension UIButton {
             objc_setAssociatedObject(self, &textObserverHandle, observer, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
         }
-        observer = objc_getAssociatedObject(self, &frameObserverHandle) as? NSKeyValueObservation
+        observer = objc_getAssociatedObject(self, &boundsObserverHandle) as? NSKeyValueObservation
         if observer == nil {
-            observer = self.observe(\.frame, changeHandler: { button, value in
+            observer = self.observe(\.bounds, changeHandler: { button, value in
                 self.reloadStyler()
             })
-            objc_setAssociatedObject(self, &frameObserverHandle, observer, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &boundsObserverHandle, observer, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
         }
         observer = objc_getAssociatedObject(self, &imageObserverHandle) as? NSKeyValueObservation
