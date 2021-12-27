@@ -86,6 +86,29 @@ extension WKWebView:IPaHasHTMLContent {
         return self.loadHTMLString(content, baseURL: baseURL)
     }
 }
+//Cookie Access
+extension WKWebView {
+    
+    @inlinable public func getAllHttpCookies(_ completion:@escaping ([HTTPCookie])->()) {
+        self.configuration.websiteDataStore.httpCookieStore.getAllCookies(completion)
+    }
+    @inlinable public func setHttpCookie(_ cookie:HTTPCookie) {
+        self.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+    }
+    public func setHttpCookies(_ cookies:[HTTPCookie]) {
+        for cookie in cookies {
+            guard var properties = cookie.properties else {
+                continue
+            }
+            if let expire = properties[.expires] as? Double {
+                properties[.expires] = Date(timeIntervalSinceNow: expire)
+            }
+            if let newCookie = HTTPCookie(properties: properties) {
+                self.configuration.websiteDataStore.httpCookieStore.setCookie(newCookie)
+            }
+        }
+    }
+}
 //Javascript helper
 extension WKWebView {
     @inlinable open func postJSMessage(with source:String,messageName:String,errorHandle: ((Error)->())? = nil) {

@@ -11,15 +11,12 @@ open class IPaFitContentCollectionView: UICollectionView {
     fileprivate var scrollViewObserver:Any?
     fileprivate var contentHeight:CGFloat = 0 {
         didSet {
-            guard let superview = self.superview ,self.heightConstraint.constant != contentHeight else{
+            guard self.heightConstraint.constant != contentHeight else{
                 return
             }
-            
-            
             self.invalidateIntrinsicContentSize()
             self.heightConstraint.constant = contentHeight
-            superview.setNeedsLayout()
-            superview.layoutIfNeeded()
+            self.superview?.layoutIfNeeded()
         }
     }
     lazy var heightConstraint:NSLayoutConstraint = {
@@ -62,5 +59,6 @@ open class IPaFitContentCollectionView: UICollectionView {
     open override func reloadData() {
         super.reloadData()
         self.invalidateIntrinsicContentSize()
+        self.superview?.layoutIfNeeded()
     }
 }

@@ -6,21 +6,12 @@
 //
 
 import UIKit
-
+@available(iOS, deprecated:15.0)
 open class IPaBottomTextStyler:IPaButtonStyler {
     @IBInspectable open var centerSpace: CGFloat = 0
     open override func reloadStyle(_ button: UIButton) {
-        
-        if #available(iOS 15.0, *) {
-            if var configuration = button.configuration {
-            
-                configuration.titlePadding = 0
-                configuration.imagePlacement = .top
-                configuration.imagePadding = centerSpace
-                return
-            }
-        }
-        
+    
+   
         guard let imageView = button.imageView,let titleLabel = button.titleLabel,let titleText = titleLabel.text else {
             return
         }
@@ -41,6 +32,9 @@ open class IPaBottomTextStyler:IPaButtonStyler {
         y = (height - button.bounds.height) * 0.5
         button.contentEdgeInsets = UIEdgeInsets(top: y, left: x, bottom: y, right: x)
     
+    
+        
+        
         
         
     }

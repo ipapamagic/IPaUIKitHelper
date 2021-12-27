@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import AVKit
+private var avAssetHandle: UInt8 = 0
 extension UIImageView :IPaRatioFitImage {
     func fitImageKeyPath() -> KeyPath<UIImageView, UIImage?> {
         return \UIImageView.image
@@ -30,4 +31,25 @@ extension UIImageView :IPaRatioFitImage {
     var fitImage: UIImage? {
         return self.image
     }
+    public func setPreview(of asset:AVAsset,time:CMTime=CMTime(seconds: 0, preferredTimescale: 600)) -> AVAssetImageGenerator {
+        let generator = AVAssetImageGenerator(asset: asset)
+        objc_setAssociatedObject(self, &avAssetHandle, generator, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        generator.generateCGImagesAsynchronously(forTimes: [NSValue(time:time)]) { _, image, _, _, _ in
+            DispatchQueue.main.async {
+                if generator.asset == asset,let image = image {
+                
+                    self.image = UIImage(cgImage: image)
+                    objc_setAssociatedObject(self, &avAssetHandle, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                }
+            }
+        }
+        return generator
+    }
+    public func cancelAssetPreviewGenerate() {
+        guard let generator = objc_getAssociatedObject(self, &avAssetHandle) as? AVAssetImageGenerator else {
+            return
+        }
+        generator.cancelAllCGImageGeneration()
+    }
+    
 }
