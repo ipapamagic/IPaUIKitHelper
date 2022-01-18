@@ -300,4 +300,7 @@ extension UIView {
         view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: edgeInsects.right).isActive = true
         
     }
+    open func addSubviewToFill(_ view:UIView) {
+        self.addSubview(view,edgeInsects: .zero)
+    }
 }
