@@ -17,7 +17,8 @@ extension WKWebView {
         // Drawing code
     }
     */
-    @IBInspectable open var isScrollEnabled: Bool {
+    //@IBInspectable 
+    open var isScrollEnabled: Bool {
         get {
             return self.scrollView.isScrollEnabled
         }
@@ -25,7 +26,8 @@ extension WKWebView {
             self.scrollView.isScrollEnabled = newValue
         }
     }
-    @IBInspectable open var bounces: Bool {
+    //@IBInspectable 
+    open var bounces: Bool {
         get {
             return self.scrollView.bounces
         }

@@ -7,12 +7,14 @@
 
 import UIKit
 import ObjectiveC
-@IBDesignable
+//@IBDesignable
 open class IPaSlideInTransitioningSegue: UIStoryboardSegue {
     private var associatedObjectHandle: UInt8 = 0
-    @IBInspectable open var animationDuration:TimeInterval = 0.3
+    //@IBInspectable
+    open var animationDuration:TimeInterval = 0.3
     open var slideInDirection:IPaSlideInDirection = .left
-    @IBInspectable open var contentSize:CGSize = .zero
+    //@IBInspectable
+    open var contentSize:CGSize = .zero
     var transitionController:IPaSlideInTransition {
         get {
             guard let controller =  objc_getAssociatedObject(self.destination, &associatedObjectHandle) as? IPaSlideInTransition else {
