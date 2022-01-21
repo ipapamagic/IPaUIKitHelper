@@ -13,8 +13,8 @@ extension UIImageView :IPaRatioFitImage {
         return \UIImageView.image
     }
     
-    //@IBInspectable 
-    open var imageRatioConstraintPrority:Float {
+    //@IBInspectable
+    @objc public var imageRatioConstraintPrority:Float {
         get {
             return ratioConstraintPrority
         }

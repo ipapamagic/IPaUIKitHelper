@@ -9,7 +9,7 @@ import UIKit
 
 extension UITextView {
     //@IBInspectable 
-    public var textPadding:CGFloat {
+    @objc public var textPadding:CGFloat {
         get {
             return self.textContainer.lineFragmentPadding
         }
@@ -18,7 +18,7 @@ extension UITextView {
         }
     }
     //@IBInspectable 
-    public var bottomInset: CGFloat {
+    @objc public var bottomInset: CGFloat {
         get {
             return textContainerInset.bottom
         }
@@ -27,7 +27,7 @@ extension UITextView {
         }
     }
     //@IBInspectable 
-    public var leftInset: CGFloat {
+    @objc public var leftInset: CGFloat {
         get {
             return textContainerInset.left
         }
@@ -36,7 +36,7 @@ extension UITextView {
         }
     }
     //@IBInspectable 
-    public var rightInset: CGFloat {
+    @objc public var rightInset: CGFloat {
         get {
             return textContainerInset.right
         }
@@ -45,7 +45,7 @@ extension UITextView {
         }
     }
     //@IBInspectable 
-    public var topInset: CGFloat {
+    @objc public var topInset: CGFloat {
         get {
             return textContainerInset.top
         }

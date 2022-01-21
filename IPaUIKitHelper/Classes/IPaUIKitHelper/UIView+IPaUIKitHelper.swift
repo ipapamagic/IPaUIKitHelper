@@ -14,9 +14,8 @@ private var roundCornerHandle: UInt8 = 0
 private var borderHandle: UInt8 = 0
 private var sizeObserverHandle: UInt8 = 0
 extension UIView {
-    
     //@IBInspectable 
-    public var maskToBounds:Bool {
+    @objc public var maskToBounds:Bool {
         get {
             return self.layer.masksToBounds
         }
@@ -25,7 +24,7 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var cornerRadius:CGFloat {
+    @objc public var cornerRadius:CGFloat {
         get {
             return self.layer.cornerRadius
         }
@@ -34,7 +33,7 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var borderWidth:CGFloat {
+    @objc public var borderWidth:CGFloat {
         get {
             return self.layer.borderWidth
         }
@@ -43,19 +42,16 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var borderColor:UIColor? {
+    @objc open var borderColor:UIColor? {
         get {
-            if let color = self.layer.borderColor {
-                return UIColor(cgColor: color)
-            }
-            return nil
+            self.layer.borderUIColor
         }
         set {
-            self.layer.borderColor = newValue?.cgColor
+            self.layer.borderUIColor = newValue
         }
     }
     //@IBInspectable 
-    public var shadowBlur:CGFloat {
+    @objc public var shadowBlur:CGFloat {
         get {
             return self.shadowRadius * 2
         }
@@ -64,7 +60,7 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var shadowColor:UIColor? {
+    @objc public var shadowColor:UIColor? {
         get {
             if let color = self.layer.shadowColor {
                 return UIColor(cgColor: color)
@@ -76,7 +72,7 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var shadowSpread:CGFloat {
+    @objc public var shadowSpread:CGFloat {
         get {
             return objc_getAssociatedObject(self, &shadowSpreadHandle) as? CGFloat ?? 0
         }
@@ -99,7 +95,7 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var shadowRadius:CGFloat {
+    @objc public var shadowRadius:CGFloat {
         get {
             return self.layer.shadowRadius
         }
@@ -108,7 +104,7 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var shadowOffset:CGSize {
+    @objc public var shadowOffset:CGSize {
         get {
             return self.layer.shadowOffset
         }
@@ -117,7 +113,7 @@ extension UIView {
         }
     }
     //@IBInspectable 
-    public var shadowOpacity:Float {
+    @objc public var shadowOpacity:Float {
         get {
             return self.layer.shadowOpacity
         }

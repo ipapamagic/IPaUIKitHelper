@@ -20,7 +20,7 @@ extension UIButton:IPaRatioFitImage {
         return \UIButton.currentBackgroundImage
     }
     //@IBInspectable 
-    open var backgroundImageRatioConstraintPrority:Float {
+    @objc open var backgroundImageRatioConstraintPrority:Float {
         get {
             return ratioConstraintPrority
         }
@@ -47,8 +47,8 @@ extension UIButton {
         }
     }
     
-    //@IBInspectable 
-    public var selectedImage:UIImage? {
+    //@IBInspectable
+    @objc public var selectedImage:UIImage? {
         get {
             return self.getStatusImage(for:.selected)
         }
@@ -56,8 +56,8 @@ extension UIButton {
             self.setStatusImage(for: .selected, image: newValue)
         }
     }
-    //@IBInspectable 
-    public var normalImage:UIImage? {
+    //@IBInspectable
+    @objc public var normalImage:UIImage? {
         get {
             return self.getStatusImage(for:.normal)
         }
@@ -65,8 +65,8 @@ extension UIButton {
             self.setStatusImage(for: .normal, image: newValue)
         }
     }
-    //@IBInspectable 
-    public var highlightedImage:UIImage? {
+    //@IBInspectable
+    @objc public var highlightedImage:UIImage? {
         get {
             return self.getStatusImage(for:.highlighted)
         }

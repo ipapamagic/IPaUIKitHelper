@@ -29,7 +29,7 @@ extension UIButton:IPaTabbarItem
 open class IPaTabbarController: IPaContainerViewController {
     open var tabIdList:[String]!
     open var initialTabId:String?
-    var tabbarItemsContainer:IPaTabbarItemContainer!
+    open var tabbarItemsContainer:IPaTabbarItemContainer!
     @IBOutlet open var itemsContainerView:UIView! {
         get {
             return tabbarItemsContainer!
@@ -42,7 +42,7 @@ open class IPaTabbarController: IPaContainerViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.initialTabIdList()
+        self.tabIdList = self.initialTabIdList()
         let tabItems = self.tabbarItemsContainer.tabbarItems
     
         for (index , tabItem) in tabItems.enumerated() {
@@ -53,8 +53,8 @@ open class IPaTabbarController: IPaContainerViewController {
         
         // Do any additional setup after loading the view.
     }
-    open func initialTabIdList(){
-        fatalError("please override and initial tabIdList")
+    open func initialTabIdList() -> [String]{
+        return []
     }
     open func configureTabbarItem(_ item:IPaTabbarItem,identifier:String) {
         item.addTargetForTap(self, action: #selector(self.onTabItem(_:)))

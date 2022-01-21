@@ -63,4 +63,7 @@ TODO: Add long description of the pod here.
   s.subspec 'IPaStoryboard' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaStoryboard/**/*'
   end
+  s.subspec 'IPaPickerUI' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaPickerUI/**/*'
+  end
 end
