@@ -6,7 +6,7 @@
 //
 
 import UIKit
-@available(iOS, deprecated:15.0)
+@available(iOS, deprecated:16.0)
 open class IPaBottomTextStyler:IPaButtonStyler {
     @IBInspectable open var centerSpace: CGFloat = 0
     open override func reloadStyle(_ button: UIButton) {
