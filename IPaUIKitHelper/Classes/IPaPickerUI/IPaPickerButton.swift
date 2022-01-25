@@ -11,7 +11,8 @@ import UIKit
 @objc public protocol IPaPickerButtonDelegate {
     func pickerButton(_ button:IPaPickerButton,numberOfRowsIn component:Int) -> Int
     
-    func pickerButton(_ button:IPaPickerButton,titleFor row:Int,for component:Int) -> String
+    @objc func pickerButton(_ button:IPaPickerButton,titleFor row:Int,for component:Int) -> String
+    @objc optional func pickerButton(_ button:IPaPickerButton,attributedTitleFor row:Int,for component:Int) -> NSAttributedString?
     func pickerButton(_ button:IPaPickerButton,didSelect row:Int,for component:Int)
     func pickerButtonConfirm(_ button:IPaPickerButton)
     @objc optional func pickerButton(_ button:IPaPickerButton, rowWidthFor component:Int) -> CGFloat
@@ -151,6 +152,9 @@ extension IPaPickerButton
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
         return self.delegate.pickerButton(self, titleFor: row, for: component)
+    }
+    public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return self.delegate.pickerButton?(self, attributedTitleFor: row, for: component)
     }
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {

@@ -13,6 +13,7 @@ import UIKit
     func datePickerButtonDidSelected(_ button:IPaDatePickerButton)
     @objc optional func toolBarConfirmText(for button:IPaDatePickerButton) -> String
     @objc optional func datePickerButtonDisplayTitle(_ button:IPaDatePickerButton) -> String
+    @objc optional func datePickerButtonDisplayAttributedTitle(_ button:IPaDatePickerButton) -> NSAttributedString?
     @objc optional func datePickerButtonDisplayFormat(_ button:IPaDatePickerButton) -> String
     @objc optional func datePickerButtonDisplayStyle(_ button:IPaDatePickerButton) -> DateFormatter.Style
 }
@@ -77,6 +78,7 @@ open class IPaDatePickerButton: UIButton,IPaDatePickerProtocol {
         self.delegate.datePickerButtonDidSelected(self)
         self.updateUI()
     }
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

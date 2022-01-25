@@ -10,7 +10,10 @@ import UIKit
 
 @objc public protocol IPaPickerTableViewCellDelegate {
     func pickerTableViewCell(_ cell:IPaPickerTableViewCell,numberOfRowsIn component:Int) -> Int
-    func pickerTableViewCell(_ cell:IPaPickerTableViewCell,titleFor row:Int,for component:Int) -> String
+    @objc optional func pickerTableViewCell(_ cell:IPaPickerTableViewCell,titleFor row:Int,for component:Int) -> String
+    
+    @objc optional func pickerTableViewCell(_ cell:IPaPickerTableViewCell,attributedTitleFor row:Int,for component:Int) -> NSAttributedString
+    
     func pickerTableViewCell(_ cell:IPaPickerTableViewCell,didSelect row:Int,for component:Int)
     func pickerTableViewCellConfirm(_ cell:IPaPickerTableViewCell)
     @objc optional func pickerTableViewCell(_ cell:IPaPickerTableViewCell,rowWidthFor component:Int) -> CGFloat
@@ -117,9 +120,11 @@ extension IPaPickerTableViewCell :UIPickerViewDelegate,UIPickerViewDataSource
     // these methods return either a plain NSString, a NSAttributedString, or a view (e.g UILabel) to display the row for the component.
     // for the view versions, we cache any hidden and thus unused views and pass them back for reuse.
     // If you return back a different object, the old one will be released. the view will be centered in the row rect
-    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-    {
-        return self.delegate.pickerTableViewCell(self, titleFor: row,for:component)
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.delegate.pickerTableViewCell?(self, titleFor: row, for: component)
+    }
+    public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return self.delegate.pickerTableViewCell?(self, attributedTitleFor: row, for: component)
     }
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
