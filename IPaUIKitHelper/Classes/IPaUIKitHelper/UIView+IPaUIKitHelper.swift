@@ -230,7 +230,7 @@ extension UIView {
         if let _ = objc_getAssociatedObject(self, &sizeObserverHandle) {
             return
         }
-        let sizeObserver = self.observe(\.bounds) { view, value in
+        let sizeObserver = self.observe(\.frame) { view, value in
             if let cornerMaskLayer = objc_getAssociatedObject(self, &roundCornerHandle) as? CAShapeLayer {
                 cornerMaskLayer.bounds = view.bounds
             }
