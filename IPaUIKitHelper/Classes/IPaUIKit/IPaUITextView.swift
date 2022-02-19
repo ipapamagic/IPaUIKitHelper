@@ -10,8 +10,10 @@ import UIKit
 //@IBDesignable
 open class IPaUITextView: UITextView {
     
-    @IBInspectable open var caretHeight:CGFloat = 0
-    @IBInspectable open var placeholder:String?
+    //@IBInspectable
+    @objc open var caretHeight:CGFloat = 0
+    //@IBInspectable
+    @objc open var placeholder:String?
         {
         get {
             return placeholderLabel.text
@@ -22,7 +24,8 @@ open class IPaUITextView: UITextView {
         }
         
     }
-    @IBInspectable open var placeholderColor:UIColor
+    //@IBInspectable
+    @objc open var placeholderColor:UIColor
         {
         get {
             return placeholderLabel.textColor

@@ -9,7 +9,8 @@
 import UIKit
 //@IBDesignable
 open class IPaUILabel: UILabel{
-    @IBInspectable public var bottomInset: CGFloat {
+//    @IBInspectable
+    @objc public var bottomInset: CGFloat {
         get {
             return textInsets.bottom
         }
@@ -18,7 +19,8 @@ open class IPaUILabel: UILabel{
             self.invalidateIntrinsicContentSize()
         }
     }
-    @IBInspectable public var leftInset: CGFloat {
+//    @IBInspectable
+    @objc public var leftInset: CGFloat {
         get {
             return textInsets.left
         }
@@ -27,7 +29,8 @@ open class IPaUILabel: UILabel{
             self.invalidateIntrinsicContentSize()
         }
     }
-    @IBInspectable public var rightInset: CGFloat {
+//    @IBInspectable
+    @objc public var rightInset: CGFloat {
         get {
             return textInsets.right
         }
@@ -36,7 +39,8 @@ open class IPaUILabel: UILabel{
             self.invalidateIntrinsicContentSize()
         }
     }
-    @IBInspectable public var topInset: CGFloat {
+//    @IBInspectable
+    @objc public var topInset: CGFloat {
         get {
             return textInsets.top
         }
@@ -46,7 +50,8 @@ open class IPaUILabel: UILabel{
         }
     }
     
-    @IBInspectable public var textInsets: UIEdgeInsets = UIEdgeInsets.zero {
+//    @IBInspectable
+    @objc public var textInsets: UIEdgeInsets = UIEdgeInsets.zero {
         didSet {
             self.invalidateIntrinsicContentSize()
         }
