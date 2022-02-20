@@ -17,7 +17,7 @@ class IPaSlideInPresentationController: UIPresentationController {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.onClose(_:)))
         view.addGestureRecognizer(gesture)
-        view.alpha = 0
+        view.backgroundColor = .clear
 
         return view
     }()
@@ -55,24 +55,24 @@ class IPaSlideInPresentationController: UIPresentationController {
         
         
         guard let coordinator = presentedViewController.transitionCoordinator else {
-            blackView.alpha = 1.0
+            blackView.backgroundColor = self.slideInInfo.coverColor
             return
         }
         
         coordinator.animate(alongsideTransition: { _ in
-            self.blackView.alpha = 1.0
+            self.blackView.backgroundColor = self.slideInInfo.coverColor
         })
     }
     
     /// let blackView's alpha animate to 0 when hide transition will begin.
     public override func dismissalTransitionWillBegin() {
         guard let coordinator = presentedViewController.transitionCoordinator else {
-            blackView.alpha = 0.0
+            self.blackView.backgroundColor = .clear
             return
         }
         
         coordinator.animate(alongsideTransition: { _ in
-            self.blackView.alpha = 0.0
+            self.blackView.backgroundColor = .clear
         })
     }
     

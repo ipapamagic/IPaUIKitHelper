@@ -12,7 +12,8 @@ open class IPaSlideInTransitioningSegue: UIStoryboardSegue {
     private var associatedObjectHandle: UInt8 = 0
     //@IBInspectable
     @objc open var animationDuration:TimeInterval = 0.3
-    open var slideInDirection:IPaSlideInDirection = .left
+    open var slideInDirection:IPaSlideInTransitionDirection = .left
+    open var coverColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
     //@IBInspectable
     @objc open var contentSize:CGSize = .zero
     var transitionController:IPaSlideInTransition {

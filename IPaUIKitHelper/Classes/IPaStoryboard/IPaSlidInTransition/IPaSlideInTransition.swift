@@ -6,7 +6,7 @@
 //
 
 import UIKit
-public enum IPaSlideInDirection:Int {
+public enum IPaSlideInTransitionDirection:Int {
     case up = 0
     case down = 1
     case left = 2
@@ -15,14 +15,15 @@ public enum IPaSlideInDirection:Int {
 protocol IPaSlideInInfo
 {
     var contentSize:CGSize { get }
-    
-    var slideDirection:IPaSlideInDirection { get }
+    var coverColor:UIColor { get }
+    var slideDirection:IPaSlideInTransitionDirection { get }
     var animationDuration:TimeInterval { get }
 }
 class IPaSlideInTransition: NSObject,UIViewControllerTransitioningDelegate,IPaSlideInInfo {
     var contentSize: CGSize = .zero
-    var slideDirection: IPaSlideInDirection = .left
+    var slideDirection: IPaSlideInTransitionDirection = .left
     var animationDuration: TimeInterval = 0.3
+    var coverColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         let presentationController = IPaSlideInPresentationController(presentedViewController: presented,
                                                                      presenting: presenting,slideDelegate: self)
