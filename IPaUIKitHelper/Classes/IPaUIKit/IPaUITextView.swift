@@ -34,6 +34,24 @@ open class IPaUITextView: UITextView {
             placeholderLabel.textColor = newValue
         }
     }
+    @objc open var placeholderFont:UIFont
+        {
+        get {
+            return placeholderLabel.font
+        }
+        set {
+            placeholderLabel.font = newValue
+        }
+    }
+    @objc open var placeholderAttributedText:NSAttributedString?
+        {
+        get {
+            return placeholderLabel.attributedText
+        }
+        set {
+            placeholderLabel.attributedText = newValue
+        }
+    }
     var placeholderLeadingConstraint:NSLayoutConstraint?
     var placeholderTopConstraint:NSLayoutConstraint?
     var placeholderTrailingConstraint:NSLayoutConstraint?
