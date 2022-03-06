@@ -23,6 +23,7 @@ import UIKit
     
     @objc optional func pickerButtonDisplayTitle(_ button:IPaPickerButton) -> String
     @objc optional func pickerButton(_ button:IPaPickerButton,displayTitleFor titles:[String]) -> String
+    @objc optional func pickerButtonUpdateUI(_ button:IPaPickerButton)
 }
 
 open class IPaPickerButton :UIButton,IPaPickerProtocol {
@@ -94,7 +95,10 @@ open class IPaPickerButton :UIButton,IPaPickerProtocol {
         self.delegate.pickerButtonConfirm(self)
     }
     func updateUI(_ titles:[String]? = nil) {
-        
+        if let delegateUpdateUI = self.delegate.pickerButtonUpdateUI {
+            delegateUpdateUI(self)
+            return
+        }
         if let title = self.delegate.pickerButtonDisplayTitle?(self) {
             self.setTitle(title, for: .normal)
         }
