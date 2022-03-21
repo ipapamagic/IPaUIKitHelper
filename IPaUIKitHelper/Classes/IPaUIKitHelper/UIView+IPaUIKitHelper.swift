@@ -297,6 +297,14 @@ extension UIView {
         self.addSizeObserver()
         
     }
+    open func addSubviewAlignSafeArea(_ view:UIView,edgeInsects:UIEdgeInsets) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(view)
+        view.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: edgeInsects.top).isActive = true
+        view.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsects.bottom).isActive = true
+        view.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: edgeInsects.left).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -edgeInsects.right).isActive = true
+    }
     open func addSubview(_ view:UIView,edgeInsects:UIEdgeInsets) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
@@ -304,7 +312,7 @@ extension UIView {
         view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -edgeInsects.bottom).isActive = true
         view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsects.left).isActive = true
         view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsects.right).isActive = true
-        
+    
     }
     open func addSubviewToFill(_ view:UIView) {
         self.addSubview(view,edgeInsects: .zero)

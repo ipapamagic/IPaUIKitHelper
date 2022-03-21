@@ -74,7 +74,7 @@ extension WKWebView {
         """
         self.evaluateJavaScript(postSource) { (result, error) in
             if let error = error {
-                IPaLog("IPaDesignableWebView - post error: \(error)")
+                IPaLog("WKWebView + IPaUIKitHelper - post error: \(error)")
             }
         }
     }

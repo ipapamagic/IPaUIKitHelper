@@ -66,4 +66,12 @@ TODO: Add long description of the pod here.
   s.subspec 'IPaPickerUI' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaPickerUI/**/*'
   end
+  s.subspec 'IPaIndicator' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaIndicator/**/*'
+  end
+  s.subspec 'IPaProgressIndicator' do |sp|
+      sp.source_files = 'IPaUIKitHelper/Classes/IPaProgressIndicator/**/*'
+      sp.dependency 'IPaDownloadManager', '~> 1.3'
+      sp.dependency 'IPaURLResourceUI', '~> 5.3'
+  end
 end
