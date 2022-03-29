@@ -18,10 +18,10 @@ import UIKit
     @objc optional func datePickerButtonDisplayStyle(_ button:IPaDatePickerButton) -> DateFormatter.Style
 }
 open class IPaDatePickerButton: UIButton,IPaDatePickerProtocol {
-    lazy var pickerView:UIDatePicker = {
+    public internal(set) lazy var pickerView:UIDatePicker = {
         return self.createDefaultPickerView(#selector(self.onSelectedDateUpdated(_:)))
     }()
-
+    
     public lazy var toolBar:UIToolbar = {
         return self.createDefaultToolBar()
     }()

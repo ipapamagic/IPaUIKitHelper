@@ -34,12 +34,11 @@ open class IPaPickerButton :UIButton,IPaPickerProtocol {
     var onPickerConfirm: Selector {
         return #selector(self.onPickerDone(_:))
     }
-    
-    
-    public lazy var pickerView:UIPickerView = {
+
+    public internal(set) lazy var pickerView:UIPickerView = {
         return self.createDefaultPickerView()
     }()
-    public lazy var toolBar:UIToolbar = {
+    public internal(set) lazy var toolBar:UIToolbar = {
         return self.createDefaultToolBar()
     }()
     open var selection: [Int] {
