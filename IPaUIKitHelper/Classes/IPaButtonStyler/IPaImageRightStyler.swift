@@ -23,10 +23,10 @@ open class IPaImageRightStyler:IPaButtonStyler {
         
         let halfSpace = max(0,space * 0.5)
         let titleLeft = -imageWidth - halfSpace
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft, bottom: 0, right: (space >= 0) ? -titleLeft : -titleLeft - space)
+        button.titleEdgeInsets = UIEdgeInsets(top: button.titleEdgeInsets.top, left: titleLeft, bottom: button.titleEdgeInsets.bottom, right: (space >= 0) ? -titleLeft : -titleLeft - space)
         let imageLeft = textWidth + halfSpace + ((space >= 0) ? 0 : space)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: imageLeft, bottom: 0, right: -imageLeft)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: halfSpace + leftSpace, bottom: 0, right: halfSpace + rightSpace)
+        button.imageEdgeInsets = UIEdgeInsets(top: button.imageEdgeInsets.top, left: imageLeft, bottom: button.imageEdgeInsets.bottom, right: -imageLeft)
+        button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: halfSpace + leftSpace, bottom: button.contentEdgeInsets.bottom, right: halfSpace + rightSpace)
         
     }
 }
