@@ -11,6 +11,11 @@ open class IPaImageRightStyler:IPaButtonStyler {
     @IBInspectable open var centerSpace: CGFloat = 0
     @IBInspectable open var leftSpace: CGFloat = 0
     @IBInspectable open var rightSpace: CGFloat = 0
+    open override func clearStyle(_ button:UIButton) {
+        button.titleEdgeInsets = UIEdgeInsets(top: button.titleEdgeInsets.top, left: 0, bottom: button.titleEdgeInsets.bottom, right: 0)
+        button.imageEdgeInsets = UIEdgeInsets(top: button.imageEdgeInsets.top, left: 0, bottom: button.imageEdgeInsets.bottom, right: 0)
+        button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: 0, bottom: button.contentEdgeInsets.bottom, right: 0)
+    }
     open override func reloadStyle(_ button: UIButton) {
         guard let imageView = button.imageView,let image = imageView.image,let titleLabel = button.titleLabel,let text = titleLabel.text,let font = button.titleLabel?.font else {
             return
