@@ -52,7 +52,31 @@ open class IPaDatePickerButton: UIButton,IPaDatePickerProtocol {
             return toolBar as UIView
         }
     }
+    override open func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
+    override open var canBecomeFirstResponder: Bool {
+        get {
+            return true
+        }
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addTarget(self,
+                  action:#selector(self.onTouch(_:)),
+                  for:.touchUpInside)
+    }
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addTarget(self,
+                  action:#selector(self.onTouch(_:)),
+                  for:.touchUpInside)
+    }
     
+    @objc func onTouch(_ sender:Any) {
+        becomeFirstResponder()
+    }
     @objc func onPickerDone(_ sender:Any) {
         //MARK:insert your onDone code
         resignFirstResponder()
