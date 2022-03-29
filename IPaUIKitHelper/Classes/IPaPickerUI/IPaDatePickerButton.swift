@@ -11,7 +11,8 @@ import UIKit
     
     func datePickerButtonConfirm(_ button:IPaDatePickerButton)
     func datePickerButtonDidSelected(_ button:IPaDatePickerButton)
-    @objc optional func toolBarConfirmText(for button:IPaDatePickerButton) -> String
+    @objc(toolBarConfirmTextForDatePickerButton:)
+    optional func toolBarConfirmText(for button:IPaDatePickerButton) -> String
     @objc optional func datePickerButtonDisplayTitle(_ button:IPaDatePickerButton) -> String
     @objc optional func datePickerButtonDisplayAttributedTitle(_ button:IPaDatePickerButton) -> NSAttributedString?
     @objc optional func datePickerButtonDisplayFormat(_ button:IPaDatePickerButton) -> String

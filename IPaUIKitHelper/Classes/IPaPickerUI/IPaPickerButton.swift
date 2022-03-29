@@ -18,7 +18,8 @@ import UIKit
     @objc optional func pickerButton(_ button:IPaPickerButton, rowWidthFor component:Int) -> CGFloat
     @objc optional func pickerButton(_ button:IPaPickerButton, rowHeightFor component:Int) -> CGFloat
     @objc optional func numberOfComponents(for button:IPaPickerButton) -> Int
-    @objc optional func toolBarConfirmText(for button:IPaPickerButton) -> String
+    @objc(toolBarConfirmTextForPickerButton:)
+    optional func toolBarConfirmText(for button:IPaPickerButton) -> String
     //choose one func for title contribution
     
     @objc optional func pickerButtonDisplayTitle(_ button:IPaPickerButton) -> String
