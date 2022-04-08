@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IPaUIKitHelper'
-  s.version          = '1.0'
+  s.version          = '1.1'
   s.summary          = 'as Name , this is a UIKit helper, there some helper function for easily use with UIKit'
 
 # This description is used to generate tags and improve search results.
