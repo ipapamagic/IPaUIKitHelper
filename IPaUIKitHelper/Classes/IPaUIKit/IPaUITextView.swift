@@ -56,18 +56,24 @@ open class IPaUITextView: UITextView {
     var placeholderTopConstraint:NSLayoutConstraint?
     var placeholderTrailingConstraint:NSLayoutConstraint?
     var placeholderBottomConstraint:NSLayoutConstraint?
+    var placeholderWidthConstraint:NSLayoutConstraint?
     lazy var placeholderLabel:UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
         label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         self.addSubview(label)
-        placeholderLeadingConstraint = NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: textContainerInset.left + textContainer.lineFragmentPadding)
-        self.addConstraint(placeholderLeadingConstraint!)
-        placeholderTopConstraint = NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: textContainerInset.top)
-        self.addConstraint(placeholderTopConstraint!)
-        placeholderBottomConstraint = NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .bottom, multiplier: 1, constant: textContainerInset.bottom)
-        self.addConstraint(placeholderBottomConstraint!)
+        placeholderWidthConstraint = label.widthAnchor.constraint(equalTo: self.widthAnchor,constant: -(textContainerInset.left + textContainer.lineFragmentPadding + textContainerInset.right + textContainer.lineFragmentPadding))
+        placeholderLeadingConstraint = label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainerInset.left + textContainer.lineFragmentPadding)
+        placeholderTrailingConstraint = self.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: textContainerInset.right + textContainer.lineFragmentPadding)
+        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor,constant: textContainerInset.top)
+        placeholderBottomConstraint = self.bottomAnchor.constraint(equalTo: label.bottomAnchor,constant: textContainerInset.bottom)
+        placeholderLeadingConstraint?.isActive = true
+        placeholderTrailingConstraint?.isActive = true
+        placeholderTopConstraint?.isActive = true
+        placeholderBottomConstraint?.isActive = true
+        placeholderWidthConstraint?.isActive = true
         setNeedsDisplay()
         return label
     }()
@@ -122,27 +128,12 @@ open class IPaUITextView: UITextView {
         placeholderLeadingConstraint?.constant = textContainerInset.left + textContainer.lineFragmentPadding
         placeholderTopConstraint?.constant = textContainerInset.top
         placeholderBottomConstraint?.constant = textContainerInset.bottom
-        placeholderTrailingConstraint?.constant = textContainerInset.right
+        placeholderTrailingConstraint?.constant = -textContainerInset.right - textContainer.lineFragmentPadding
         
-//        // attr
-//        var attrs:[NSAttributedString.Key:Any] = [NSAttributedString.Key.foregroundColor:self.placeholderColor]
-//        if let font = self.font {
-//            attrs[NSAttributedString.Key.font] = font
-//        }
-//
-//        var placeHolderRect = rect
-//        //draw text
-//        placeHolderRect.origin.x = textContainerInset.left + textContainer.lineFragmentPadding
-//        placeHolderRect.origin.y = textContainerInset.top
-//        placeHolderRect.size.width = self.bounds.width  - textContainerInset.left - textContainerInset.right - textContainer.lineFragmentPadding - textContainer.lineFragmentPadding
-//        placeHolderRect.size.height = self.bounds.height - textContainerInset.top - textContainerInset.bottom
-//        (self.placeholder as NSString).draw(at: placeHolderRect.origin, withAttributes: attrs)
-//
+        placeholderWidthConstraint?.constant = -textContainerInset.right - textContainer.lineFragmentPadding - textContainerInset.left - textContainer.lineFragmentPadding
+
     }
-//    override open func layoutSubviews() {
-//        super.layoutSubviews()
-//        self.setNeedsDisplay()
-//    }
+
     override open func caretRect(for position: UITextPosition) -> CGRect {
         var superRect = super.caretRect(for:position)
         if caretHeight <= 0 {

@@ -74,4 +74,7 @@ TODO: Add long description of the pod here.
       sp.dependency 'IPaDownloadManager', '~> 1.3'
       sp.dependency 'IPaURLResourceUI', '~> 5.3'
   end
+  s.subspec 'IPaDataPager' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaDataPager/**/*'
+  end
 end
