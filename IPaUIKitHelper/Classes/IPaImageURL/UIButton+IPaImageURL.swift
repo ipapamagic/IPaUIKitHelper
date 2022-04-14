@@ -100,7 +100,7 @@ extension UIButton {
     @objc open func setImageUrl(_ imageUrl:URL?,defaultImage:UIImage?) {
         self.setImage(defaultImage, for: .normal)
         if let imageUrl = imageUrl {
-            if let data = IPaFileCache.shared.cacheFileData(for: imageUrl), let image = UIImage(data: data) {
+            if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 DispatchQueue.main.async(execute: {
                     self.setImage(image, for: .normal)
                 })
@@ -111,11 +111,16 @@ extension UIButton {
                 switch(result) {
                 case .success(let (_,url)):
                     do {
-                        let newUrl = IPaFileCache.shared.moveToCache(for: imageUrl, from: url)
-                        let data = try Data(contentsOf: newUrl)
+                        let data = try Data(contentsOf: url)
+                        IPaFileCache.shared.setCache(data, for: imageUrl)
+                        guard  imageUrl == self._imageUrl else {
+                            return
+                        }
+                        
                         if  let image = UIImage(data: data) {
 
                             DispatchQueue.main.async(execute: {
+                                
                                 self.setImage(image, for: .normal)
                             })
                             
@@ -133,7 +138,7 @@ extension UIButton {
     @objc open func setBackgroundImageUrl(_ imageUrl:URL?,defaultImage:UIImage?) {
         self.setBackgroundImage(defaultImage, for: .normal)
         if let imageUrl = imageUrl {
-            if let data = IPaFileCache.shared.cacheFileData(for: imageUrl), let image = UIImage(data: data) {
+            if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 DispatchQueue.main.async(execute: {
                     self.setBackgroundImage(image, for: .normal)
                 })
@@ -144,8 +149,12 @@ extension UIButton {
                 switch(result) {
                 case .success(let (_,url)):
                     do {
-                        let newUrl = IPaFileCache.shared.moveToCache(for: imageUrl, from: url)
-                        let data = try Data(contentsOf: newUrl)
+                        let data = try Data(contentsOf: url)
+                        IPaFileCache.shared.setCache(data, for:  imageUrl)
+                        guard imageUrl == self._backgroundImageUrl else {
+                            return
+                        }
+                        
                         if  let image = UIImage(data: data)                             {
                             self.setBackgroundImage(image, for: .normal)
                         }

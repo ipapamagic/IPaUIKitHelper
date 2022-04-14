@@ -107,7 +107,7 @@ extension UIImageView {
         _imageUrl = imageUrl
         self.image = defaultImage
         if let imageUrl = imageUrl {
-            if let data = IPaFileCache.shared.cacheFileData(for: imageUrl), let image = UIImage(data: data) {
+            if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 self.image = image
                 return
             }
@@ -116,13 +116,18 @@ extension UIImageView {
                 switch(result) {
                 case .success(let (_,url)):
                     do {
-                        let newUrl = IPaFileCache.shared.moveToCache(for: imageUrl, from: url)
-                        let data = try Data(contentsOf: newUrl)
+                        let data = try Data(contentsOf: url)
+                        IPaFileCache.shared.setCache(data, for: imageUrl)
+                    
                         if  let image = UIImage(data: data) {
                             
                             DispatchQueue.main.async(execute: {
-                                self.image = image
                                 downloadCompleted?(image)
+                                guard imageUrl == self._imageUrl else {
+                                    return
+                                }
+                                self.image = image
+                                
                             })
                             
                         }
@@ -140,7 +145,7 @@ extension UIImageView {
     @objc open func setHighlightedImageUrl(_ imageUrl:URL?,defaultImage:UIImage?,downloadCompleted: ((UIImage?)->())? = nil) {
         self.highlightedImage = defaultImage
         if let imageUrl = imageUrl {
-            if let data = IPaFileCache.shared.cacheFileData(for: imageUrl), let image = UIImage(data: data) {
+            if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 DispatchQueue.main.async(execute: {
                     self.highlightedImage = image
                 })
@@ -149,14 +154,24 @@ extension UIImageView {
             _ = IPaDownloadManager.shared.download(from: imageUrl) { (result) in
                 switch(result) {
                 case .success(let (_,url)):
-                    let newUrl = IPaFileCache.shared.moveToCache(for:  imageUrl, from: url)
-                    if let image = UIImage(contentsOfFile: newUrl.absoluteString) {
-                        DispatchQueue.main.async(execute: {
-                            self.highlightedImage = image
-                            downloadCompleted?(image)
-                        })
+                    do {
+                        let data = try Data(contentsOf: url)
+                        IPaFileCache.shared.setCache(data, for: imageUrl)
+                        
+                        if let image = UIImage(data: data) {
+                            DispatchQueue.main.async(execute: {
+                                downloadCompleted?(image)
+                                guard imageUrl == self._highlightedImageUrl else {
+                                    return
+                                }
+                                self.highlightedImage = image
+                                
+                            })
+                        }
                     }
-                    
+                    catch (let error) {
+                        IPaLog(error.localizedDescription)
+                    }
                 case .failure( _):
                     break
                 }
