@@ -20,7 +20,9 @@ open class IPaTableViewDataPager<SectionIdentifierType,ItemIdentifierType>: IPaD
         super.onInsert(pageInfo,loadingItentifier:loadingItentifier)
         var snapshot = self.dataSource.snapshot()
         snapshot.deleteItems([loadingItentifier])
-        snapshot.appendItems(pageInfo.datas, toSection: self.section)
+        if pageInfo.datas.count > 0 {
+            snapshot.appendItems(pageInfo.datas, toSection: self.section)
+        }
         if self.currentPage < self.totalPage {
             snapshot.appendItems( [self.createLoadingType(self.currentPage + 1)], toSection: self.section)
         }

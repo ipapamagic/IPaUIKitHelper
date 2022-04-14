@@ -33,12 +33,20 @@ open class IPaDataPager<SectionIdentifierType,ItemIdentifierType,ContainerType,C
         super.init()
         
     }
+    public func resetLoading() {
+        self.loadingPage = 0
+        self.currentPage = 0
+        self.totalPage = 1
+    }
     public func provideCell(_ view:ContainerType,indexPath:IndexPath,itemIdentifier:ItemIdentifierType) -> CellType {
         if itemIdentifier.isLoadingType {
             let nextPage = self.currentPage + 1
             if self.loadingPage == 0 {
+                self.loadingPage = nextPage
                 self.loadData(nextPage) { pageInfo in
-                    self.onInsert(pageInfo,loadingItentifier: itemIdentifier)
+                    if pageInfo.currentPage == self.loadingPage {
+                        self.onInsert(pageInfo,loadingItentifier: itemIdentifier)
+                    }
                 }
             }
             return self.provideLoadingCell(view, indexPath: indexPath, itemIdentifier: itemIdentifier)
