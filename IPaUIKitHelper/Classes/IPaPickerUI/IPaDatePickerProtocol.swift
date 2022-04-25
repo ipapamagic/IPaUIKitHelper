@@ -8,11 +8,11 @@
 import UIKit
 
 protocol IPaDatePickerProtocol:UIView {
-    var pickerView:UIDatePicker { get set}
-    var toolBar:UIToolbar {get set }
+    var pickerView:UIDatePicker { get}
+    var toolBar:UIToolbar {get }
     var toolBarConfirmText:String {get}
     var onPickerConfirm:Selector {get}
-    var selectedDate:Date {get set}
+    var selectedDate:Date {get}
     func updateUI()
     func createDefaultPickerView(_ action:Selector) -> UIDatePicker
     func createDefaultToolBar() -> UIToolbar

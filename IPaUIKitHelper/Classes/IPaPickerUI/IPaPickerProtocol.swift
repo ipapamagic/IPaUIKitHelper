@@ -8,11 +8,9 @@
 import UIKit
 
 protocol IPaPickerProtocol:UIView,UIPickerViewDelegate,UIPickerViewDataSource {
-    var pickerView:UIPickerView { get set}
-    var toolBar:UIToolbar {get set }
+    var pickerView:UIPickerView { get}
     var toolBarConfirmText:String {get}
     var onPickerConfirm:Selector {get}
-    var selection:[Int] {get set}
     func updateUI(_ titles:[String]?)
     func createDefaultPickerView() -> UIPickerView
     func createDefaultToolBar() -> UIToolbar
@@ -51,7 +49,7 @@ extension IPaPickerProtocol {
         var titles = [String]()
         for (idx,row) in selection.enumerated() {
             self.pickerView.selectRow(row, inComponent: idx, animated: false)
-            titles.append(self.pickerView?(pickerView, titleForRow: row, forComponent: idx) ?? "")
+            titles.append(self.pickerView?(self.pickerView, titleForRow: row, forComponent: idx) ?? "")
         }
         
         self.updateUI(titles)

@@ -37,11 +37,11 @@ open class IPaPickerTableViewCell :UITableViewCell,IPaPickerProtocol {
             self.setSelection(newValue)
         }
     }
-    lazy var pickerView:UIPickerView = {
+    public private(set) lazy var pickerView:UIPickerView = {
         return self.createDefaultPickerView()
     }()
 
-    lazy var toolBar:UIToolbar = {
+    public private(set) lazy var toolBar:UIToolbar = {
         return self.createDefaultToolBar()
     }()
     @IBOutlet open var delegate:IPaPickerTableViewCellDelegate! {

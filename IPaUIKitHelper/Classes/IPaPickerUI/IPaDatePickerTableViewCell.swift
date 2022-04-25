@@ -13,9 +13,18 @@ import UIKit
     @objc optional func toolBarConfirmText(for cell:IPaDatePickerTableViewCell) -> String
 }
 open class IPaDatePickerTableViewCell: UITableViewCell,IPaDatePickerProtocol {
-    lazy var pickerView:UIDatePicker = {
+    public private(set) lazy var pickerView:UIDatePicker = {
         return self.createDefaultPickerView(#selector(self.onSelectedDateUpdated(_:)))
     }()
+    open var selectedDuration:TimeInterval {
+        get {
+            return self.pickerView.countDownDuration
+        }
+        set {
+            self.pickerView.countDownDuration = newValue
+            self.updateUI()
+        }
+    }
     open var selectedDate:Date {
         get {
             return self.pickerView.date
@@ -25,7 +34,7 @@ open class IPaDatePickerTableViewCell: UITableViewCell,IPaDatePickerProtocol {
             self.updateUI()
         }
     }
-    lazy var toolBar:UIToolbar = {
+    public private(set) lazy var toolBar:UIToolbar = {
         return self.createDefaultToolBar()
     }()
     var toolBarConfirmText: String {
