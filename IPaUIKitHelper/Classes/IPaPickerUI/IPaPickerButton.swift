@@ -116,10 +116,12 @@ open class IPaPickerButton :UIButton,IPaPickerProtocol {
             
         }
         if let title = self.delegate.pickerButton?(self, displayTitleFor: titleList) {
+            self.titleLabel?.text = title // make kvo work, sometimes settitle will not trigger kvo
             self.setTitle(title, for: .normal)
         }
         else {
             let title = titleList.joined(separator: " ")
+            self.titleLabel?.text = title // make kvo work, sometimes settitle will not trigger kvo
             self.setTitle(title, for: .normal)
         }
     }
