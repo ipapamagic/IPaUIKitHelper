@@ -88,7 +88,11 @@ class IPaSlideInPresentationController: UIPresentationController {
     
     
     @objc func onClose(_ sender:Any) {
-        self.presentingViewController.dismiss(animated: true, completion: nil)
+        self.presentedViewController.dismiss(animated: true, completion: {
+            if let viewController = self.presentedViewController as? IPaSlideInTransitionActor {
+                viewController.onSlideInTapToClose()
+            }
+        })
     }
     
 }

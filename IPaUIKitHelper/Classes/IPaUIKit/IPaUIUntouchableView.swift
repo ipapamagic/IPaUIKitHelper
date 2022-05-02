@@ -7,8 +7,8 @@
 
 import UIKit
 
-class IPaUIUntouchableView: UIView {
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+open class IPaUIUntouchableView: UIView {
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
         return (view == self) ? nil : view
     }
