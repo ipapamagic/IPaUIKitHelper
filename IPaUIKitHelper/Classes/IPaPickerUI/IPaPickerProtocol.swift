@@ -7,15 +7,21 @@
 
 import UIKit
 
-protocol IPaPickerProtocol:UIView,UIPickerViewDelegate,UIPickerViewDataSource {
-    var pickerView:UIPickerView { get}
-    var toolBarConfirmText:String {get}
+protocol _IPaPickerProtocol:UIView,UIPickerViewDelegate,UIPickerViewDataSource {
     var onPickerConfirm:Selector {get}
     func updateUI(_ titles:[String]?)
-    func createDefaultPickerView() -> UIPickerView
-    func createDefaultToolBar() -> UIToolbar
 }
-extension IPaPickerProtocol {
+
+public protocol IPaPickerProtocol {
+    var firstSelection:Int {get nonmutating set}
+    var selections:[Int] {get nonmutating set}
+    var pickerView:UIPickerView { get}
+    var toolBarConfirmText:String {get}
+}
+protocol IPaPickerProtocols:IPaPickerProtocol,_IPaPickerProtocol {
+    
+}
+extension IPaPickerProtocols {
     func createDefaultPickerView() -> UIPickerView {
         let pickerView = UIPickerView(frame:.zero)
         pickerView.delegate = self
@@ -38,22 +44,30 @@ extension IPaPickerProtocol {
         toolBar.items = array
         return toolBar
     }
-    func getSelection() -> [Int] {
-        var selection = [Int]()
-        for component in 0 ..< self.pickerView.numberOfComponents {
-            selection.append(self.pickerView.selectedRow(inComponent: component))
+    public var firstSelection:Int {
+        get {
+            return self.selections.first ?? 0
         }
-        return selection
-    }
-    func setSelection(_ selection:[Int]) {
-        var titles = [String]()
-        for (idx,row) in selection.enumerated() {
-            self.pickerView.selectRow(row, inComponent: idx, animated: false)
-            titles.append(self.pickerView?(self.pickerView, titleForRow: row, forComponent: idx) ?? "")
+        set {
+            self.selections = [newValue]
         }
-        
-        self.updateUI(titles)
-    
     }
-    
+    public var selections:[Int] {
+        get {
+            var selections = [Int]()
+            for component in 0 ..< self.pickerView.numberOfComponents {
+                selections.append(self.pickerView.selectedRow(inComponent: component))
+            }
+            return selections
+        }
+        set {
+            var titles = [String]()
+            for (idx,row) in newValue.enumerated() {
+                self.pickerView.selectRow(row, inComponent: idx, animated: false)
+                titles.append(self.pickerView?(self.pickerView, titleForRow: row, forComponent: idx) ?? "")
+            }
+            
+            self.updateUI(titles)
+        }
+    }
 }

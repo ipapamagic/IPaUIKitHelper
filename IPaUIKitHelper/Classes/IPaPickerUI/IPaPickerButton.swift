@@ -27,12 +27,12 @@ import UIKit
     @objc optional func pickerButtonUpdateUI(_ button:IPaPickerButton)
 }
 
-open class IPaPickerButton :UIButton,IPaPickerProtocol {
-    var toolBarConfirmText: String {
+open class IPaPickerButton :UIButton,IPaPickerProtocols {
+    public var toolBarConfirmText: String {
         return self.delegate.toolBarConfirmText?(for: self) ?? "Done"
     }
     
-    var onPickerConfirm: Selector {
+    public var onPickerConfirm: Selector {
         return #selector(self.onPickerDone(_:))
     }
 
@@ -42,14 +42,6 @@ open class IPaPickerButton :UIButton,IPaPickerProtocol {
     public internal(set) lazy var toolBar:UIToolbar = {
         return self.createDefaultToolBar()
     }()
-    open var selection: [Int] {
-        get {
-            return self.getSelection()
-        }
-        set {
-            self.setSelection(newValue)
-        }
-    }
     @IBOutlet open var delegate:IPaPickerButtonDelegate!
     override open var inputView:UIView! {
         get {

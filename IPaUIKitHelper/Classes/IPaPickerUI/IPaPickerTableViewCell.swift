@@ -22,20 +22,12 @@ import UIKit
     @objc optional func toolBarConfirmText(for cell:IPaPickerTableViewCell) -> String
 }
 
-open class IPaPickerTableViewCell :UITableViewCell,IPaPickerProtocol {
-    var toolBarConfirmText: String {
+open class IPaPickerTableViewCell :UITableViewCell,IPaPickerProtocols {
+    public var toolBarConfirmText: String {
         return self.delegate.toolBarConfirmText?(for: self) ?? "Done"
     }
     var onPickerConfirm: Selector {
         return #selector(self.onPickerDone(_:))
-    }
-    open var selection: [Int] {
-        get {
-            return self.getSelection()
-        }
-        set {
-            self.setSelection(newValue)
-        }
     }
     public private(set) lazy var pickerView:UIPickerView = {
         return self.createDefaultPickerView()
@@ -84,7 +76,7 @@ open class IPaPickerTableViewCell :UITableViewCell,IPaPickerProtocol {
         resignFirstResponder()
         self.delegate.pickerTableViewCellConfirm(self)
     }
-    func updateUI(_ titles: [String]?) {
+    public func updateUI(_ titles: [String]?) {
         
     }
     
