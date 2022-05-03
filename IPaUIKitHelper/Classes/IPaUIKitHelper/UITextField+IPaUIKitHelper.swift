@@ -8,7 +8,7 @@
 import UIKit
 
 extension UITextField {
-    public func checkResultDouble(changeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func checkResultDecimal(changeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         guard let text = self.text else {
             let allowedCharacters = CharacterSet.decimalDigits
@@ -29,7 +29,7 @@ extension UITextField {
         
         return true
     }
-    public func checkResultInt(changeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func checkResultInteger(changeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         guard let text = self.text else {
             let allowedCharacters = CharacterSet.decimalDigits
