@@ -46,7 +46,7 @@ TODO: Add long description of the pod here.
   s.subspec 'IPaImageURL' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaImageURL/*'
     sp.dependency 'IPaDownloadManager', '~> 1.3'
-    sp.dependency 'IPaFileCache', '~> 1.0'
+    sp.dependency 'IPaFileCache', '~> 1.1'
   end
   s.subspec 'IPaButtonStyler' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaButtonStyler/*'
