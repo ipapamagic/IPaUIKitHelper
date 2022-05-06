@@ -230,7 +230,9 @@ extension UIView {
         if let _ = objc_getAssociatedObject(self, &sizeObserverHandle) {
             return
         }
-        let sizeObserver = self.observe(\.frame) { view, value in
+        
+        //mark observe frame or bounds is not working sometimes....,so observe center instead
+        let sizeObserver = self.observe(\.center) { view, value in
             if let cornerMaskLayer = objc_getAssociatedObject(self, &roundCornerHandle) as? CAShapeLayer {
                 cornerMaskLayer.bounds = view.bounds
             }
