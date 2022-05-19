@@ -139,6 +139,7 @@ extension UIButton {
     }
     @objc open func setBackgroundImageUrl(_ imageUrl:URL?,defaultImage:UIImage?) {
         self.setBackgroundImage(defaultImage, for: .normal)
+        self._backgroundImageUrl = imageUrl
         if let imageUrl = imageUrl {
             if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 DispatchQueue.main.async(execute: {
