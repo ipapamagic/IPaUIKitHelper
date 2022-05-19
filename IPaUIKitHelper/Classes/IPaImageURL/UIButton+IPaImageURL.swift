@@ -99,7 +99,9 @@ extension UIButton {
     }
     @objc open func setImageUrl(_ imageUrl:URL?,defaultImage:UIImage?) {
         self.setImage(defaultImage, for: .normal)
+        self._imageUrl = imageUrl
         if let imageUrl = imageUrl {
+            
             if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 DispatchQueue.main.async(execute: {
                     self.setImage(image, for: .normal)
