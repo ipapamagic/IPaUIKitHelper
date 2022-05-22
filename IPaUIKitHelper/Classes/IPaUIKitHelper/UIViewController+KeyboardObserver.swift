@@ -13,6 +13,9 @@ class IPaKeyboardTapDelegation:NSObject,UIGestureRecognizerDelegate {
         let isControllTapped = touch.view is UIControl
         return !isControllTapped
     }
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 
 }
 public extension UIViewController {
