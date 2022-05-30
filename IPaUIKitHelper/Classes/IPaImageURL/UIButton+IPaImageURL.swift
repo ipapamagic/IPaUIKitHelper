@@ -8,6 +8,7 @@
 import UIKit
 import IPaDownloadManager
 import IPaFileCache
+import IPaLog
 private var imageUrlHandle: UInt8 = 0
 private var backgroundImageUrlHandle: UInt8 = 0
 private var downloadImageOperationHandle: UInt8 = 0
@@ -97,7 +98,7 @@ extension UIButton {
             }
         }
     }
-    @objc open func setImageUrl(_ imageUrl:URL?,defaultImage:UIImage?) {
+    @objc open func setImageUrl(_ imageUrl:URL?,defaultImage:UIImage? = nil,downloadCompleted:((UIImage?)->())? = nil) {
         self.setImage(defaultImage, for: .normal)
         self._imageUrl = imageUrl
         if let imageUrl = imageUrl {
@@ -105,6 +106,7 @@ extension UIButton {
             if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 DispatchQueue.main.async(execute: {
                     self.setImage(image, for: .normal)
+                    downloadCompleted?(image)
                 })
                 return
             }
@@ -112,38 +114,47 @@ extension UIButton {
                 self.downloadImageOperation = nil
                 switch(result) {
                 case .success(let (_,url)):
+                    guard  imageUrl == self._imageUrl else {
+                        return
+                    }
                     do {
                         let data = try Data(contentsOf: url)
                         IPaFileCache.shared.setCache(data, for: imageUrl)
-                        guard  imageUrl == self._imageUrl else {
-                            return
-                        }
+                        
                         
                         if  let image = UIImage(data: data) {
-
                             DispatchQueue.main.async(execute: {
-                                
                                 self.setImage(image, for: .normal)
+                                downloadCompleted?(image)
                             })
-                            
+                        }
+                        else {
+                            downloadCompleted?(nil)
                         }
                     }
                     catch let error {
-                        print(error)
+                        IPaLog(error.localizedDescription)
+                        downloadCompleted?(nil)
                     }
                 case .failure(let error):
-                    print(error)
+                    IPaLog(error.localizedDescription)
+                    downloadCompleted?(nil)
                 }
             }
         }
+        else {
+            downloadCompleted?(nil)
+        }
+        
     }
-    @objc open func setBackgroundImageUrl(_ imageUrl:URL?,defaultImage:UIImage?) {
+    @objc open func setBackgroundImageUrl(_ imageUrl:URL?,defaultImage:UIImage? = nil,downloadCompleted:((UIImage?)->())? = nil) {
         self.setBackgroundImage(defaultImage, for: .normal)
         self._backgroundImageUrl = imageUrl
         if let imageUrl = imageUrl {
             if let data = IPaFileCache.shared.cacheData(for: imageUrl), let image = UIImage(data: data) {
                 DispatchQueue.main.async(execute: {
                     self.setBackgroundImage(image, for: .normal)
+                    downloadCompleted?(image)
                 })
                 return
             }
@@ -151,25 +162,35 @@ extension UIButton {
                 self.downloadBGImageOperation = nil
                 switch(result) {
                 case .success(let (_,url)):
+                    guard imageUrl == self._backgroundImageUrl else {
+                        return
+                    }
                     do {
                         let data = try Data(contentsOf: url)
                         IPaFileCache.shared.setCache(data, for:  imageUrl)
-                        guard imageUrl == self._backgroundImageUrl else {
-                            return
+                        if  let image = UIImage(data: data)  {
+                            DispatchQueue.main.async(execute: {
+                                self.setBackgroundImage(image, for: .normal)
+                                downloadCompleted?(image)
+                            })
                         }
-                        
-                        if  let image = UIImage(data: data)                             {
-                            self.setBackgroundImage(image, for: .normal)
+                        else {
+                            downloadCompleted?(nil)
                         }
                     }
                     catch let error {
-                        print(error)
+                        IPaLog(error.localizedDescription)
+                        downloadCompleted?(nil)
                     }
                     
-                case .failure( _):
-                    break
+                case .failure( let error):
+                    IPaLog(error.localizedDescription)
+                    downloadCompleted?(nil)
                 }
             }
+        }
+        else {
+            downloadCompleted?(nil)
         }
     }
 }

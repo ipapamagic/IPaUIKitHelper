@@ -103,7 +103,7 @@ extension UIImageView {
         self.setImageUrl(url, defaultImage: defaultImage,downloadCompleted:downloadCompleted)
         
     }
-    @objc open func setImageUrl(_ imageUrl:URL?,defaultImage:UIImage?,downloadCompleted: ((UIImage?)->())? = nil) {
+    @objc open func setImageUrl(_ imageUrl:URL?,defaultImage:UIImage? = nil,downloadCompleted: ((UIImage?)->())? = nil) {
         _imageUrl = imageUrl
         self.image = defaultImage
         if let imageUrl = imageUrl {
