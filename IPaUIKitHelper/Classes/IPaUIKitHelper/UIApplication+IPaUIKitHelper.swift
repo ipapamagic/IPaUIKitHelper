@@ -8,13 +8,23 @@
 import UIKit
 
 extension UIApplication {
+    var mainScene:UIWindowScene? {
+        get {
+            if let scene = self.connectedScenes
+                .filter({$0.activationState == .foregroundActive}).first {
+                return scene as? UIWindowScene
+            }
+            else if let scene = self.connectedScenes
+                .filter({$0.activationState == .foregroundInactive}).first {
+                return scene as? UIWindowScene
+            }
+            return nil
+            
+        }
+    }
     public var mainWindow:UIWindow? {
         get {
-            return self.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .map({$0 as? UIWindowScene})
-                .compactMap({$0})
-                .first?.windows
+            return self.mainScene?.windows
                     .filter({$0.isKeyWindow}).first
         }
     }

@@ -53,6 +53,7 @@ TODO: Add long description of the pod here.
   end
   s.subspec 'IPaNestedScrollView' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaNestedScrollView/*'
+    sp.dependency 'IPaUIKitHelper/IPaFitContent'
   end
   s.subspec 'IPaFitContent' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaFitContent/*'
