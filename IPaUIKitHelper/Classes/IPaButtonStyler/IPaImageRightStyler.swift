@@ -26,14 +26,16 @@ open class IPaImageRightStyler:IPaButtonStyler {
         let textWidth = min(textLabelWidth,(text as NSString).size(withAttributes: [.font:font]).width) + textWidthOffset
         
         
-        let space = ((centerSpace <= 0) ? (button.bounds.width - leftSpace - rightSpace - imageWidth - textWidth) : centerSpace) + textWidthOffset
+        let space = ((centerSpace <= 0) ? (button.bounds.width - leftSpace - rightSpace - imageWidth - textWidth) : centerSpace)
         
         let halfSpace = max(0,space * 0.5)
         let titleLeft = -imageWidth - halfSpace
         button.titleEdgeInsets = UIEdgeInsets(top: button.titleEdgeInsets.top, left: titleLeft, bottom: button.titleEdgeInsets.bottom, right: -titleLeft)
         let imageLeft = textWidth + halfSpace
         button.imageEdgeInsets = UIEdgeInsets(top: button.imageEdgeInsets.top, left: imageLeft, bottom: button.imageEdgeInsets.bottom, right: -imageLeft)
-        button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: halfSpace + leftSpace, bottom: button.contentEdgeInsets.bottom, right: halfSpace + rightSpace)
+        
+        let halfTextWidthOffset = textWidthOffset * 0.5
+        button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: halfSpace + leftSpace + halfTextWidthOffset, bottom: button.contentEdgeInsets.bottom, right: halfSpace + rightSpace + halfTextWidthOffset)
         
     }
 }
