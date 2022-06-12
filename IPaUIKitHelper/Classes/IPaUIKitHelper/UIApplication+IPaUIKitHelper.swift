@@ -18,7 +18,7 @@ extension UIApplication {
                 .filter({$0.activationState == .foregroundInactive}).first {
                 return scene as? UIWindowScene
             }
-            return nil
+            return self.connectedScenes.filter({$0 is UIWindowScene}).first as? UIWindowScene
             
         }
     }

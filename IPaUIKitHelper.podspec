@@ -78,4 +78,7 @@ TODO: Add long description of the pod here.
   s.subspec 'IPaDataPager' do |sp|
     sp.source_files = 'IPaUIKitHelper/Classes/IPaDataPager/**/*'
   end
+  s.subspec 'IPaToast' do |sp|
+    sp.source_files = 'IPaUIKitHelper/Classes/IPaToast/**/*'
+  end
 end
