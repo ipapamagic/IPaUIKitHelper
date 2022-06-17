@@ -24,11 +24,19 @@ extension UIApplication {
     }
     public var mainWindow:UIWindow? {
         get {
-            return self.mainScene?.windows
-                    .filter({$0.isKeyWindow}).first
+            guard let windows = self.mainScene?.windows else {
+                return nil
+            }
+            return windows
+                .first(where:{$0.isKeyWindow}) ?? windows.first
         }
     }
     public var rootViewController:UIViewController? {
-        return self.mainWindow?.rootViewController
+        get {
+            return self.mainWindow?.rootViewController
+        }
+        set {
+            self.mainWindow?.rootViewController = newValue
+        }
     }
 }
