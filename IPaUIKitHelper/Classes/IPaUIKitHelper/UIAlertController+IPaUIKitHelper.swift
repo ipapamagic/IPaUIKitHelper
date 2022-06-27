@@ -12,10 +12,10 @@ class IPaTextFieldInputAction: UIAlertAction {
     }
 }
 extension UIAlertController {
-    public class func presentAlertInput(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,onAddTextField:((UITextField)->())? = nil,confirm:String,confirmAction:@escaping (String)->(),cancel:String? = nil,cancelAction:(()->())? = nil) {
+    public class func presentAlertInput(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,onAddTextField:((UITextField)->())? = nil,confirm:String,confirmStyle:UIAlertAction.Style = .default ,confirmAction:@escaping (String)->(),cancel:String? = nil,cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let action = IPaTextFieldInputAction(title: confirm, style: .default, handler: { action in
+        let action = IPaTextFieldInputAction(title: confirm, style: confirmStyle, handler: { action in
             guard let textField = alertController.textFields?.first,let text = textField.text,text.count > 0 else {
                 cancelAction?()
                 return
@@ -38,7 +38,7 @@ extension UIAlertController {
         viewController.present(alertController, animated: true)
         
     }
-    public class func presentAlert(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,confirm:String,confirmAction:@escaping ()->(),cancel:String? = nil,cancelAction:(()->())? = nil) {
+    public class func presentAlert(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:@escaping ()->(),cancel:String? = nil,cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let action = UIAlertAction(title: confirm, style: .default, handler: { action in
