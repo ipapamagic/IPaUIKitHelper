@@ -12,7 +12,7 @@ class IPaTextFieldInputAction: UIAlertAction {
     }
 }
 extension UIAlertController {
-    public class func presentAlertInput(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,onAddTextField:((UITextField)->())? = nil,confirm:String,confirmStyle:UIAlertAction.Style = .default ,confirmAction:@escaping (String)->(),cancel:String? = nil,cancelAction:(()->())? = nil) {
+    public class func presentAlertInput(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,onAddTextField:((UITextField)->())? = nil,confirm:String,confirmStyle:UIAlertAction.Style = .default ,confirmAction:@escaping (String)->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel,cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let action = IPaTextFieldInputAction(title: confirm, style: confirmStyle, handler: { action in
@@ -24,7 +24,7 @@ extension UIAlertController {
         })
         alertController.addAction(action)
         if let cancel = cancel {
-            let cancelAction = UIAlertAction(title: cancel, style: .cancel, handler: { action in
+            let cancelAction = UIAlertAction(title: cancel, style: cancelStyle, handler: { action in
                 cancelAction?()
             })
             alertController.addAction(cancelAction)
@@ -38,15 +38,15 @@ extension UIAlertController {
         viewController.present(alertController, animated: true)
         
     }
-    public class func presentAlert(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:@escaping ()->(),cancel:String? = nil,cancelAction:(()->())? = nil) {
+    public class func presentAlert(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:@escaping ()->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let action = UIAlertAction(title: confirm, style: .default, handler: { action in
+        let action = UIAlertAction(title: confirm, style: confirmStyle, handler: { action in
             confirmAction()
         })
         alertController.addAction(action)
         if let cancel = cancel {
-            let cancelAction = UIAlertAction(title: cancel, style: .cancel, handler: { action in
+            let cancelAction = UIAlertAction(title: cancel, style: cancelStyle, handler: { action in
                 cancelAction?()
             })
             alertController.addAction(cancelAction)
