@@ -52,7 +52,11 @@ extension UIButton {
         }
         observer = objc_getAssociatedObject(self, &boundsObserverHandle) as? NSKeyValueObservation
         if observer == nil {
-            observer = self.observe(\.bounds, changeHandler: { button, value in
+            
+            observer = self.observe(\.bounds,options: [.new,.old], changeHandler: { button, value in
+                guard value.oldValue != value.newValue else {
+                    return
+                }
                 self.reloadStyler()
             })
             objc_setAssociatedObject(self, &boundsObserverHandle, observer, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)

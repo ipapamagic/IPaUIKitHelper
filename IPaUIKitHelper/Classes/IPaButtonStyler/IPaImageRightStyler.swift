@@ -39,6 +39,5 @@ open class IPaImageRightStyler:IPaButtonStyler {
         
         let halfTextWidthOffset = textWidthOffset * 0.5
         button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: halfSpace + leftSpace + halfTextWidthOffset, bottom: button.contentEdgeInsets.bottom, right: halfSpace + rightSpace + halfTextWidthOffset)
-        print(button.contentEdgeInsets)
     }
 }
