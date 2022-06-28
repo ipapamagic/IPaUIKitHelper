@@ -16,17 +16,20 @@ open class IPaImageRightStyler:IPaButtonStyler {
         button.titleEdgeInsets = UIEdgeInsets(top: button.titleEdgeInsets.top, left: 0, bottom: button.titleEdgeInsets.bottom, right: 0)
         button.imageEdgeInsets = UIEdgeInsets(top: button.imageEdgeInsets.top, left: 0, bottom: button.imageEdgeInsets.bottom, right: 0)
         button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: 0, bottom: button.contentEdgeInsets.bottom, right: 0)
+        
+        
     }
     open override func reloadStyle(_ button: UIButton) {
         guard let imageView = button.imageView,let titleLabel = button.titleLabel,let text = titleLabel.text,let font = button.titleLabel?.font else {
             return
         }
         let imageWidth = imageView.bounds.width
-        let textLabelWidth = button.bounds.width - imageWidth - leftSpace - rightSpace
+        let buttonSize = button.systemLayoutSizeFitting(button.intrinsicContentSize)
+        let textLabelWidth = buttonSize.width - imageWidth
         let textWidth = min(textLabelWidth,(text as NSString).size(withAttributes: [.font:font]).width) + textWidthOffset
         
         
-        let space = ((centerSpace <= 0) ? (button.bounds.width - leftSpace - rightSpace - imageWidth - textWidth) : centerSpace)
+        let space = ((centerSpace <= 0) ? (buttonSize.width  - imageWidth - textWidth) : centerSpace)
         
         let halfSpace = max(0,space * 0.5)
         let titleLeft = -imageWidth - halfSpace
@@ -36,6 +39,6 @@ open class IPaImageRightStyler:IPaButtonStyler {
         
         let halfTextWidthOffset = textWidthOffset * 0.5
         button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: halfSpace + leftSpace + halfTextWidthOffset, bottom: button.contentEdgeInsets.bottom, right: halfSpace + rightSpace + halfTextWidthOffset)
-        
+        print(button.contentEdgeInsets)
     }
 }
