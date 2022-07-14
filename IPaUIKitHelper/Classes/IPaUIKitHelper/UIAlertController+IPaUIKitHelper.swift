@@ -38,7 +38,7 @@ extension UIAlertController {
         viewController.present(alertController, animated: true)
         
     }
-    public class func presentAlert(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:@escaping ()->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil) {
+    public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:@escaping ()->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let action = UIAlertAction(title: confirm, style: confirmStyle, handler: { action in
@@ -51,7 +51,11 @@ extension UIAlertController {
             })
             alertController.addAction(cancelAction)
         }
-        viewController.present(alertController, animated: true)
+        var presentVC = viewController ?? UIApplication.shared.rootViewController!
+        while let presentedVC = presentVC.presentedViewController {
+            presentVC = presentedVC
+        }
+        presentVC.present(alertController, animated: true)
     }
 
 }

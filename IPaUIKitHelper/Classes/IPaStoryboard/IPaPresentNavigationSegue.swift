@@ -12,6 +12,9 @@ open class IPaPresentNavigationSegue: UIStoryboardSegue {
         return UINavigationController(rootViewController: self.destination)
     }
     override open func perform() {
-        self.source.present(self.createNavigationController(), animated: true)
+        let navigationController = self.createNavigationController()
+        navigationController.modalPresentationStyle = self.destination.modalPresentationStyle
+        navigationController.modalTransitionStyle = self.destination.modalTransitionStyle
+        self.source.present(navigationController, animated: true)
     }
 }
