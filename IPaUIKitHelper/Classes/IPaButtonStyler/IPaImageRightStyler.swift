@@ -24,33 +24,27 @@ open class IPaImageRightStyler:IPaButtonStyler {
         }
         let imageWidth = imageView.intrinsicContentSize.width
         let textWidth = (text as NSString).size(withAttributes: [.font:font]).width
-        var space = centerSpace
+        let space = max(0,centerSpace)
         var titleLeft = -imageWidth
         var imageLeft = textWidth
-        var contentEdgeInsets = UIEdgeInsets.zero
-        var halfSpace = space
-        if centerSpace > 0 {
-            halfSpace = max(0,space * 0.5)
-            contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: leftSpace + halfSpace, bottom: button.contentEdgeInsets.bottom, right: rightSpace + halfSpace)
+        let halfSpace = max(0,space * 0.5)
+        
+        let basicWidth =  imageWidth + textWidth + leftSpace + rightSpace + space
+        
+        let buttonSize = button.bounds.size
+        if buttonSize.width > basicWidth ,leftSpace >= 0 ,rightSpace >= 0{
+            //left / right space do to
+            let extraSpace  = (buttonSize.width  - imageWidth - textWidth - leftSpace - rightSpace) * 0.5
+            titleLeft -= extraSpace
+            imageLeft += extraSpace
         }
         else {
-            //dynamic center space
-            let buttonSize = button.bounds.size
-            space = (buttonSize.width  - imageWidth - textWidth - leftSpace - rightSpace)
-            titleLeft += leftSpace
-            imageLeft -= rightSpace
-            
-            if space > 0 {
-                let extraSpace = space * 0.5
-                contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: extraSpace, bottom: button.contentEdgeInsets.bottom, right: extraSpace)
-            }
-            halfSpace = max(0,space * 0.5)
+            titleLeft -= halfSpace
+            imageLeft += halfSpace
         }
-        
-        titleLeft -= halfSpace
-        imageLeft += halfSpace
+       
         button.titleEdgeInsets = UIEdgeInsets(top: button.titleEdgeInsets.top, left: titleLeft, bottom: button.titleEdgeInsets.bottom, right: -titleLeft)
         button.imageEdgeInsets = UIEdgeInsets(top: button.imageEdgeInsets.top, left: imageLeft, bottom: button.imageEdgeInsets.bottom, right: -imageLeft)
-        button.contentEdgeInsets = contentEdgeInsets
+        button.contentEdgeInsets = UIEdgeInsets(top: button.contentEdgeInsets.top, left: leftSpace + halfSpace, bottom: button.contentEdgeInsets.bottom, right: rightSpace + halfSpace)
     }
 }
