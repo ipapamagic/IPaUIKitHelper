@@ -24,10 +24,9 @@ extension UIAlertController {
         })
         alertController.addAction(action)
         if let cancel = cancel {
-            let cancelAction = UIAlertAction(title: cancel, style: cancelStyle, handler: { action in
+            alertController.addAction(title: cancel,style: cancelStyle) { action in
                 cancelAction?()
-            })
-            alertController.addAction(cancelAction)
+            }
         }
         alertController.addTextField { textField in
             onAddTextField?(textField)
@@ -38,18 +37,16 @@ extension UIAlertController {
         viewController.present(alertController, animated: true)
         
     }
-    public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:@escaping ()->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil) {
+    public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let action = UIAlertAction(title: confirm, style: confirmStyle, handler: { action in
-            confirmAction()
-        })
-        alertController.addAction(action)
+        alertController.addAction(title: confirm,style: confirmStyle) { action in
+            confirmAction?()
+        }
         if let cancel = cancel {
-            let cancelAction = UIAlertAction(title: cancel, style: cancelStyle, handler: { action in
+            alertController.addAction(title: cancel,style: cancelStyle) { action in
                 cancelAction?()
-            })
-            alertController.addAction(cancelAction)
+            }
         }
         var presentVC = viewController ?? UIApplication.shared.rootViewController!
         while let presentedVC = presentVC.presentedViewController {
@@ -57,5 +54,8 @@ extension UIAlertController {
         }
         presentVC.present(alertController, animated: true)
     }
-
+    
+    @inlinable public func addAction(title:String,style:UIAlertAction.Style = .default,handler:((UIAlertAction)->())? = nil) {
+        self.addAction(UIAlertAction(title: title, style: style, handler:handler))
+    }
 }
