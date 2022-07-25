@@ -9,6 +9,9 @@ import UIKit
 @available(iOS, deprecated:16.0)
 open class IPaBottomTextStyler:IPaButtonStyler {
     @IBInspectable open var centerSpace: CGFloat = 0
+    @IBInspectable open var imageOffsetX: CGFloat = 0
+    //imageTopOffset greater to 0 to make image fix space from top
+    @IBInspectable open var topOffset: CGFloat = -1
     open override func reloadStyle(_ button: UIButton) {
     
    
@@ -16,21 +19,32 @@ open class IPaBottomTextStyler:IPaButtonStyler {
             return
         }
         let imageSize = imageView.frame.size
-        var y = (imageSize.height + centerSpace) * 0.5
+        let titleSize = titleText.size(withAttributes: [NSAttributedString.Key.font: titleLabel.font as Any])
+        let height = imageSize.height + titleSize.height + centerSpace
+        
+        var topOffset:CGFloat = 0
+        if  self.topOffset >= 0 {
+            topOffset = self.topOffset - ((button.bounds.height - height) * 0.5)
+        }
+        
+        
+        var y = (imageSize.height + centerSpace) * 0.5 + topOffset
+        
         button.titleEdgeInsets = UIEdgeInsets(
             top: y, left: -imageSize.width, bottom: -y, right: 0)
         
         // raise the image and push it right so it appears centered
         //  above the text
-        let titleSize = titleText.size(withAttributes: [NSAttributedString.Key.font: titleLabel.font as Any])
-        y = -(titleSize.height + centerSpace) * 0.5
+        
+        y = -(titleSize.height + centerSpace) * 0.5 + topOffset
         button.imageEdgeInsets = UIEdgeInsets(
-            top: y, left: 0, bottom: -y, right: -titleSize.width)
-        let width = max(imageSize.width,titleSize.width)
-        let height = imageSize.height + titleSize.height + centerSpace
-        let x = (width - button.bounds.width) * 0.5
-        y = (height - button.bounds.height) * 0.5
-        button.contentEdgeInsets = UIEdgeInsets(top: y, left: x, bottom: y, right: x)
+            top: y, left: imageOffsetX, bottom: -y, right: -titleSize.width - imageOffsetX)
+//        let width = max(imageSize.width,titleSize.width)
+        
+//        let x = (width - button.bounds.width) * 0.5
+        y = (height - max(imageSize.height,titleSize.height)) * 0.5
+        
+        button.contentEdgeInsets = UIEdgeInsets(top: y, left: 0, bottom: y, right: 0)
     
     
         
