@@ -19,7 +19,7 @@ import UIKit
     @objc optional func pickerTableViewCell(_ cell:IPaPickerTableViewCell,rowWidthFor component:Int) -> CGFloat
     @objc optional func pickerTableViewCell(_ cell:IPaPickerTableViewCell,rowHeightFor component:Int) -> CGFloat
     @objc optional func numberOfComponents(for cell:IPaPickerTableViewCell) -> Int
-    @objc optional func toolBarConfirmText(for cell:IPaPickerTableViewCell) -> String
+    @objc(pickerCellToolBarConfirmTextForCell:) optional func toolBarConfirmText(for cell:IPaPickerTableViewCell) -> String
 }
 
 open class IPaPickerTableViewCell :UITableViewCell,IPaPickerProtocols {

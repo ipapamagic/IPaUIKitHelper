@@ -10,7 +10,7 @@ import UIKit
     
     func datePickerTableViewCellConfirm(_ cell:IPaDatePickerTableViewCell)
     func datePickerTableViewCellDidSelected(_ cell:IPaDatePickerTableViewCell)
-    @objc optional func toolBarConfirmText(for cell:IPaDatePickerTableViewCell) -> String
+    @objc(datePickerCellToolBarConfirmTextForCell:) optional func toolBarConfirmText(for cell:IPaDatePickerTableViewCell) -> String
 }
 open class IPaDatePickerTableViewCell: UITableViewCell,IPaDatePickerProtocol {
     public private(set) lazy var pickerView:UIDatePicker = {

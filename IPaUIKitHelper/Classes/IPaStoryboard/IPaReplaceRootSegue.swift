@@ -32,8 +32,10 @@ open class IPaReplaceRootSegue: UIStoryboardSegue {
             window.rootViewController = self.destination
             return;
         }
-        let snapshot = oldVC.view!
-        snapshot.snapshotView(afterScreenUpdates: true)
+        guard let snapshot = oldVC.view!.snapshotView(afterScreenUpdates: true) else {
+            window.rootViewController = self.destination
+            return
+        }
         self.destination.view.addSubview(snapshot)
         window.rootViewController = self.destination
         
