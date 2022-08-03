@@ -19,7 +19,10 @@ open class IPaBottomTextStyler:IPaButtonStyler {
             return
         }
         let imageSize = imageView.frame.size
-        let titleSize = titleText.size(withAttributes: [NSAttributedString.Key.font: titleLabel.font as Any])
+        let textAttributes = [NSAttributedString.Key.font: titleLabel.font as Any]
+        let rect = (titleText as NSString).boundingRect(with: button.bounds.size,options: [.usesDeviceMetrics,.usesLineFragmentOrigin], attributes: textAttributes, context: nil)
+        let titleSize = rect.size
+        
         let height = imageSize.height + titleSize.height + centerSpace
         
         var topOffset:CGFloat = 0
@@ -42,7 +45,10 @@ open class IPaBottomTextStyler:IPaButtonStyler {
 //        let width = max(imageSize.width,titleSize.width)
         
 //        let x = (width - button.bounds.width) * 0.5
-        y = (height - max(imageSize.height,titleSize.height)) * 0.5
+        
+        let originTextSize = titleText.size(withAttributes: textAttributes)
+        
+        y = (height - max(imageSize.height,originTextSize.height)) * 0.5
         
         button.contentEdgeInsets = UIEdgeInsets(top: y, left: 0, bottom: y, right: 0)
     
