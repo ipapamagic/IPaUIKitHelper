@@ -1,0 +1,59 @@
+{
+  "pins" : [
+    {
+      "identity" : "ipadownloadmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ipapamagic/IPaDownloadManager.git",
+      "state" : {
+        "revision" : "04be4ca8bc8b95dd7321f5a9aef0f4e009deaccc",
+        "version" : "1.4.0"
+      }
+    },
+    {
+      "identity" : "ipafilecache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ipapamagic/IPaFileCache.git",
+      "state" : {
+        "revision" : "e9a228b7685ecb85143127b157e974c8d1a0fef6",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "ipaimagetool",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ipapamagic/IPaImageTool.git",
+      "state" : {
+        "revision" : "c9810bbd9d1c197bf195821fb290e0395fb15f8f",
+        "version" : "2.6.0"
+      }
+    },
+    {
+      "identity" : "ipalog",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ipapamagic/IPaLog.git",
+      "state" : {
+        "revision" : "f743fdc25bd1247139ebb9f9d800230786f6000b",
+        "version" : "3.1.0"
+      }
+    },
+    {
+      "identity" : "ipasecurity",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ipapamagic/IPaSecurity.git",
+      "state" : {
+        "revision" : "58b951794d60312796f227c4dc862a4d589ad266",
+        "version" : "4.1.0"
+      }
+    },
+    {
+      "identity" : "ipaurlresourceui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ipapamagic/IPaURLResourceUI.git",
+      "state" : {
+        "revision" : "2c5c2f2d4899e19633a8487f0b924b6ebab290c0",
+        "version" : "5.4.0"
+      }
+    }
+  ],
+  "version" : 2
+}

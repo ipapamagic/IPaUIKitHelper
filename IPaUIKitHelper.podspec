@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IPaUIKitHelper'
-  s.version          = '1.1'
+  s.version          = '1.2.0'
   s.summary          = 'as Name , this is a UIKit helper, there some helper function for easily use with UIKit'
 
 # This description is used to generate tags and improve search results.
@@ -40,45 +40,45 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   s.subspec 'IPaUIKitHelper' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaUIKitHelper/*'
+    sp.source_files = 'Sources/IPaUIKitHelper/*'
     sp.dependency 'IPaImageTool', '~> 2.3'
   end
   s.subspec 'IPaImageURL' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaImageURL/*'
+    sp.source_files = 'Sources/IPaImageURL/*'
     sp.dependency 'IPaDownloadManager', '~> 1.3'
     sp.dependency 'IPaFileCache', '~> 1.1'
   end
   s.subspec 'IPaButtonStyler' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaButtonStyler/*'
+    sp.source_files = 'Sources/IPaButtonStyler/*'
   end
   s.subspec 'IPaNestedScrollView' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaNestedScrollView/*'
+    sp.source_files = 'Sources/IPaNestedScrollView/*'
     sp.dependency 'IPaUIKitHelper/IPaFitContent'
   end
   s.subspec 'IPaFitContent' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaFitContent/*'
+    sp.source_files = 'Sources/IPaFitContent/*'
   end
   s.subspec 'IPaUIKit' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaUIKit/*'
+    sp.source_files = 'Sources/IPaUIKit/*'
   end
   s.subspec 'IPaStoryboard' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaStoryboard/**/*'
+    sp.source_files = 'Sources/IPaStoryboard/**/*'
   end
   s.subspec 'IPaPickerUI' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaPickerUI/**/*'
+    sp.source_files = 'Sources/IPaPickerUI/**/*'
   end
   s.subspec 'IPaIndicator' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaIndicator/**/*'
+    sp.source_files = 'Sources/IPaIndicator/**/*'
   end
   s.subspec 'IPaProgressIndicator' do |sp|
-      sp.source_files = 'IPaUIKitHelper/Classes/IPaProgressIndicator/**/*'
+      sp.source_files = 'Sources/IPaProgressIndicator/**/*'
       sp.dependency 'IPaDownloadManager', '~> 1.3'
       sp.dependency 'IPaURLResourceUI', '~> 5.3'
   end
   s.subspec 'IPaDataPager' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaDataPager/**/*'
+    sp.source_files = 'Sources/IPaDataPager/**/*'
   end
   s.subspec 'IPaToast' do |sp|
-    sp.source_files = 'IPaUIKitHelper/Classes/IPaToast/**/*'
+    sp.source_files = 'Sources/IPaToast/**/*'
   end
 end
