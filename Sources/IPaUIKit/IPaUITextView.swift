@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 //@IBDesignable
 open class IPaUITextView: UITextView {
     
@@ -20,7 +21,7 @@ open class IPaUITextView: UITextView {
         }
         set {
             placeholderLabel.text = newValue
-            self.setNeedsDisplay()
+            placeholderLabel.layoutIfNeeded()
         }
         
     }
@@ -57,27 +58,33 @@ open class IPaUITextView: UITextView {
     var placeholderTrailingConstraint:NSLayoutConstraint?
     var placeholderBottomConstraint:NSLayoutConstraint?
     var placeholderWidthConstraint:NSLayoutConstraint?
+    var placeholderHeightConstraint:NSLayoutConstraint?
     lazy var placeholderLabel:UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
         label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         self.addSubview(label)
         placeholderWidthConstraint = label.widthAnchor.constraint(equalTo: self.widthAnchor,constant: -(textContainerInset.left + textContainer.lineFragmentPadding + textContainerInset.right + textContainer.lineFragmentPadding))
+        placeholderHeightConstraint = label.heightAnchor.constraint(equalTo: self.heightAnchor,constant: -(textContainerInset.top + textContainerInset.bottom + textContainer.lineFragmentPadding + textContainer.lineFragmentPadding))
+        
         placeholderLeadingConstraint = label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainerInset.left + textContainer.lineFragmentPadding)
         placeholderTrailingConstraint = self.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: textContainerInset.right + textContainer.lineFragmentPadding)
         placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor,constant: textContainerInset.top)
-        placeholderBottomConstraint = self.bottomAnchor.constraint(equalTo: label.bottomAnchor,constant: textContainerInset.bottom)
+        placeholderBottomConstraint = self.bottomAnchor.constraint(equalTo:  label.bottomAnchor,constant: textContainerInset.bottom)
         placeholderLeadingConstraint?.isActive = true
         placeholderTrailingConstraint?.isActive = true
         placeholderTopConstraint?.isActive = true
         placeholderBottomConstraint?.isActive = true
         placeholderWidthConstraint?.isActive = true
+        placeholderHeightConstraint?.isActive = true
         setNeedsDisplay()
         return label
     }()
-    
+    var textChangedObserver:NSObjectProtocol?
+    var placeholderAnyCancellable:AnyCancellable?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -93,7 +100,6 @@ open class IPaUITextView: UITextView {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    var textChangedObserver:NSObjectProtocol?
     override open func awakeFromNib() {
         super.awakeFromNib()
         addTextChangeObserver()
@@ -103,27 +109,28 @@ open class IPaUITextView: UITextView {
         
         textChangedObserver = NotificationCenter.default.addObserver(forName: UITextView.textDidChangeNotification, object: self, queue: nil, using: {
             noti in
-            self.setNeedsDisplay()
+            self.layoutIfNeeded()
         })
-        
+        placeholderAnyCancellable = self.placeholderLabel.publisher(for: \.text).sink(receiveValue: {
+            text in
+            self.layoutIfNeeded()
+        })
     }
     deinit {
         if let textChangedObserver = textChangedObserver {
             NotificationCenter.default.removeObserver(textChangedObserver)
         }
+        
         //        removeObserver(self, forKeyPath: "font")
         //        removeObserver(self, forKeyPath: "text")
         //        removeObserver(self, forKeyPath: "placeholder")
         //        removeObserver(self, forKeyPath: "placeholderColor")
         //        removeObserver(self, forKeyPath: "textContainerInset")
     }
+   
     override open func draw(_ rect: CGRect) {
         //return if hasText
-        if self.hasText {
-            placeholderLabel.isHidden = true
-            return
-        }
-        placeholderLabel.isHidden = false
+        placeholderLabel.isHidden = self.hasText
         
         placeholderLeadingConstraint?.constant = textContainerInset.left + textContainer.lineFragmentPadding
         placeholderTopConstraint?.constant = textContainerInset.top
