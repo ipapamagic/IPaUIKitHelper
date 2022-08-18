@@ -110,6 +110,7 @@ open class IPaUITextView: UITextView {
         textChangedObserver = NotificationCenter.default.addObserver(forName: UITextView.textDidChangeNotification, object: self, queue: nil, using: {
             noti in
             self.layoutIfNeeded()
+            self.placeholderLabel.isHidden = self.hasText
         })
         placeholderAnyCancellable = self.placeholderLabel.publisher(for: \.text).sink(receiveValue: {
             text in
