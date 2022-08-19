@@ -29,6 +29,25 @@ extension UIButton:IPaRatioFitImage {
         }
     }
 }
+
+extension UIButton {
+    @objc open func contentEdgeInsetFitContent(_ heightOffset:CGFloat = 0) {
+        self.contentEdgeInsets = .zero
+        self.superview?.layoutIfNeeded()
+        let textHeight = self.titleLabel?.bounds.height ?? 0
+        let imageHeight = self.imageView?.bounds.height ?? 0
+        let contentHeight = max(textHeight,imageHeight)
+        let heightOffset = heightOffset + max(0 ,(contentHeight - self.bounds.height) * 0.5)
+        
+        let textWidth = self.titleLabel?.bounds.width ?? 0
+        let imageWidth = self.imageView?.bounds.width ?? 0
+        let contentWidth = max(textWidth,imageWidth)
+        let widthOffset = max(0 ,(contentWidth - self.bounds.width) * 0.5)
+        
+        self.contentEdgeInsets = UIEdgeInsets(top: heightOffset, left: widthOffset, bottom: heightOffset, right: widthOffset)
+    
+    }
+}
 @available(iOS 15.0, *)
 private var statusImagesHandle: UInt8 = 0
 @available(iOS 15.0, *)
@@ -92,4 +111,5 @@ extension UIButton {
             self.setupButtonConfigurationHandle()
         }
     }
+   
 }

@@ -50,12 +50,7 @@ open class IPaBottomTextStyler:IPaButtonStyler {
         
         y = (height - max(imageSize.height,originTextSize.height)) * 0.5
         
-        button.contentEdgeInsets = UIEdgeInsets(top: y, left: 0, bottom: y, right: 0)
-    
-    
-        
-        
-        
+        button.contentEdgeInsets = UIEdgeInsets(top: y + topOffset, left: 0, bottom: y, right: 0)
         
     }
 }
