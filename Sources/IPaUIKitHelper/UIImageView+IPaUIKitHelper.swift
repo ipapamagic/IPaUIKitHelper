@@ -52,5 +52,11 @@ extension UIImageView :IPaRatioFitImage {
         }
         generator.cancelAllCGImageGeneration()
     }
-    
+    public func setAnimatedImage(_ image:UIImage,repeatTime:Int) {
+        
+        self.animationRepeatCount = repeatTime
+        self.animationImages = image.images
+        self.animationDuration = image.duration
+        self.image = image.images?.last
+    }
 }
