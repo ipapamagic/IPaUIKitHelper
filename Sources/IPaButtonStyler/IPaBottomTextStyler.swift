@@ -18,39 +18,41 @@ open class IPaBottomTextStyler:IPaButtonStyler {
         guard let imageView = button.imageView,let titleLabel = button.titleLabel,let titleText = titleLabel.text else {
             return
         }
+        var buttonSize = button.bounds.size
+        
+        var contentEdgeInset = UIEdgeInsets.zero
+        
         let imageSize = imageView.frame.size
         let textAttributes = [NSAttributedString.Key.font: titleLabel.font as Any]
-        let rect = (titleText as NSString).boundingRect(with: button.bounds.size,options: [.usesDeviceMetrics,.usesLineFragmentOrigin], attributes: textAttributes, context: nil)
+        let rect = (titleText as NSString).boundingRect(with: buttonSize,options: [.usesDeviceMetrics,.usesLineFragmentOrigin], attributes: textAttributes, context: nil)
         let titleSize = rect.size
+        let originTextSize = titleText.size(withAttributes: textAttributes)
+        let topOffset = max(0,self.topOffset)
+        let height = imageSize.height + titleSize.height + centerSpace + topOffset
+        let width = max(imageSize.width, titleSize.width)
         
-        let height = imageSize.height + titleSize.height + centerSpace
-        
-        var topOffset:CGFloat = 0
-        if  self.topOffset >= 0 {
-            topOffset = self.topOffset - ((button.bounds.height - height) * 0.5)
-        }
+        let oHeight = min(buttonSize.height,max(imageSize.height,originTextSize.height))
         
         
-        var y = (imageSize.height + centerSpace) * 0.5 + topOffset
+        let offsetW:CGFloat = abs(width - buttonSize.width) * 0.5
+        contentEdgeInset.left = offsetW
+        contentEdgeInset.right = offsetW
+        
+        let offsetH:CGFloat = abs(height - oHeight) * 0.5
+        contentEdgeInset.top = offsetH
+        contentEdgeInset.bottom = offsetH
+        
+        // topOffset < 0 then make it alignment to center
+        var y = topOffset >= 0 ? (-(height - titleSize.height) * 0.5 + topOffset + imageSize.height + centerSpace) : (imageSize.height + centerSpace) * 0.5
         
         button.titleEdgeInsets = UIEdgeInsets(
             top: y, left: -imageSize.width, bottom: -y, right: 0)
         
-        // raise the image and push it right so it appears centered
-        //  above the text
-        
-        y = -(titleSize.height + centerSpace) * 0.5 + topOffset
+        y = topOffset >= 0 ? -(height - imageSize.height) * 0.5 + topOffset : -(titleSize.height - centerSpace) * 0.5
         button.imageEdgeInsets = UIEdgeInsets(
             top: y, left: imageOffsetX, bottom: -y, right: -titleSize.width - imageOffsetX)
-//        let width = max(imageSize.width,titleSize.width)
-        
-//        let x = (width - button.bounds.width) * 0.5
-        
-        let originTextSize = titleText.size(withAttributes: textAttributes)
-        
-        y = (height - max(imageSize.height,originTextSize.height)) * 0.5
-        
-        button.contentEdgeInsets = UIEdgeInsets(top: y + topOffset, left: 0, bottom: y, right: 0)
+
+        button.contentEdgeInsets = contentEdgeInset
         
     }
 }

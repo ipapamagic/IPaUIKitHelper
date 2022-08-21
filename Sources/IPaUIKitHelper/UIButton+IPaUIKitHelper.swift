@@ -34,16 +34,21 @@ extension UIButton {
     @objc open func contentEdgeInsetFitContent(_ heightOffset:CGFloat = 0) {
         self.contentEdgeInsets = .zero
         self.superview?.layoutIfNeeded()
-        let textHeight = self.titleLabel?.bounds.height ?? 0
-        let imageHeight = self.imageView?.bounds.height ?? 0
-        let contentHeight = max(textHeight,imageHeight)
-        let heightOffset = heightOffset + max(0 ,(contentHeight - self.bounds.height) * 0.5)
+        var finalRect = CGRect.zero
+        if let titleLabel = self.titleLabel {
+            let rect = self.convert(titleLabel.bounds,from:self.titleLabel)
+            finalRect = self.bounds.union(rect)
+            
+        }
+        if let imageView = self.imageView {
+            let rect = self.convert(imageView.bounds,from:imageView)
+            finalRect = finalRect.union(rect)
+        }
         
-        let textWidth = self.titleLabel?.bounds.width ?? 0
-        let imageWidth = self.imageView?.bounds.width ?? 0
-        let contentWidth = max(textWidth,imageWidth)
-        let widthOffset = max(0 ,(contentWidth - self.bounds.width) * 0.5)
+        let heightOffset = heightOffset + max(0 ,(finalRect.height - self.bounds.height) * 0.5)
         
+        let widthOffset = max(0 ,(finalRect.width - self.bounds.width) * 0.5)
+
         self.contentEdgeInsets = UIEdgeInsets(top: heightOffset, left: widthOffset, bottom: heightOffset, right: widthOffset)
     
     }
