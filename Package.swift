@@ -14,6 +14,36 @@ let package = Package(
         .library(
             name: "IPaImageURL",
             targets: ["IPaImageURL"]),
+        .library(
+            name: "IPaButtonStyler",
+            targets: ["IPaButtonStyler"]),
+        .library(
+            name: "IPaFitContent",
+            targets: ["IPaFitContent"]),
+        .library(
+            name: "IPaUIKit",
+            targets: ["IPaUIKit"]),
+        .library(
+            name: "IPaNestedScrollView",
+            targets: ["IPaNestedScrollView"]),
+        .library(
+            name: "IPaStoryboard",
+            targets: ["IPaStoryboard"]),
+        .library(
+            name: "IPaPickerUI",
+            targets: ["IPaPickerUI"]),
+        .library(
+            name: "IPaIndicator",
+            targets: ["IPaIndicator"]),
+        .library(
+            name: "IPaProgressIndicator",
+            targets: ["IPaProgressIndicator"]),
+        .library(
+            name: "IPaDataPager",
+            targets: ["IPaDataPager"]),
+        .library(
+            name: "IPaToast",
+            targets: ["IPaToast"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
