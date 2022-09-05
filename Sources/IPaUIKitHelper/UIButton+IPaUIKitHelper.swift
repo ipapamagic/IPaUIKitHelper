@@ -31,7 +31,7 @@ extension UIButton:IPaRatioFitImage {
 }
 
 extension UIButton {
-    @objc open func contentEdgeInsetFitContent(_ heightOffset:CGFloat = 0) {
+    @objc open func contentEdgeInsetFitContent(_ edgeInsets:UIEdgeInsets = .zero) {
         self.contentEdgeInsets = .zero
         self.superview?.layoutIfNeeded()
         var finalRect = CGRect.zero
@@ -45,11 +45,11 @@ extension UIButton {
             finalRect = finalRect.union(rect)
         }
         
-        let heightOffset = heightOffset + max(0 ,(finalRect.height - self.bounds.height) * 0.5)
+        let heightOffset = max(0 ,(finalRect.height - self.bounds.height) * 0.5)
         
         let widthOffset = max(0 ,(finalRect.width - self.bounds.width) * 0.5)
 
-        self.contentEdgeInsets = UIEdgeInsets(top: heightOffset, left: widthOffset, bottom: heightOffset, right: widthOffset)
+        self.contentEdgeInsets = UIEdgeInsets(top: heightOffset + edgeInsets.top, left: widthOffset + edgeInsets.left, bottom: heightOffset + edgeInsets.bottom, right: widthOffset + edgeInsets.right)
     
     }
 }
@@ -70,7 +70,14 @@ extension UIButton {
             objc_setAssociatedObject(self, &statusImagesHandle, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    
+    @objc public var titleNumberOfLines:Int {
+        get {
+            return self.titleLabel?.numberOfLines ?? 1
+        }
+        set {
+            self.titleLabel?.numberOfLines = newValue
+        }
+    }
     //@IBInspectable
     @objc public var selectedImage:UIImage? {
         get {

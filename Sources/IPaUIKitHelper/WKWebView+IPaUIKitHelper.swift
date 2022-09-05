@@ -120,6 +120,11 @@ extension WKWebView {
             }
         }
     }
+    @inlinable open func injectJSFile(_ fileUrl:URL) {
+        let data = try! Data(contentsOf: fileUrl)
+        let jsString = String(data: data, encoding: .utf8)!
+        self.injectJS(jsString)
+    }
     @inlinable open func injectJS(_ source:String) {
         //UserScript object
         let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: true)

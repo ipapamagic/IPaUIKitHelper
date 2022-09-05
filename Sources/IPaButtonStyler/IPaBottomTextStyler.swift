@@ -44,11 +44,11 @@ open class IPaBottomTextStyler:IPaButtonStyler {
         contentEdgeInset.bottom = offsetH
         
         // topOffset < 0 then make it alignment to center
-        var y = self.topOffset >= 0 ? (-(height - titleSize.height) * 0.5 + topOffset + imageSize.height + centerSpace) : (imageSize.height + centerSpace ) * 0.5
+        var y = self.topOffset >= 0 ? (-(buttonSize.height - titleSize.height) * 0.5 + topOffset + imageSize.height + centerSpace) : (imageSize.height + centerSpace ) * 0.5
         
         button.titleEdgeInsets = UIEdgeInsets(top: y, left: -imageSize.width, bottom: -y, right: 0)
         
-        y = self.topOffset >= 0 ? -(height - imageSize.height) * 0.5 + topOffset : -(titleSize.height + centerSpace) * 0.5
+        y = self.topOffset >= 0 ? -(buttonSize.height - imageSize.height) * 0.5 + topOffset : -(titleSize.height + centerSpace) * 0.5
         button.imageEdgeInsets = UIEdgeInsets(top: y, left: imageOffsetX, bottom: -y, right: -titleSize.width - imageOffsetX)
 
         button.contentEdgeInsets = contentEdgeInset

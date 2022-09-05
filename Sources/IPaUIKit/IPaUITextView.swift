@@ -68,12 +68,12 @@ open class IPaUITextView: UITextView {
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         self.addSubview(label)
         placeholderWidthConstraint = label.widthAnchor.constraint(equalTo: self.widthAnchor,constant: -(textContainerInset.left + textContainer.lineFragmentPadding + textContainerInset.right + textContainer.lineFragmentPadding))
-        placeholderHeightConstraint = label.heightAnchor.constraint(equalTo: self.heightAnchor,constant: -(textContainerInset.top + textContainerInset.bottom + textContainer.lineFragmentPadding + textContainer.lineFragmentPadding))
-        
+        placeholderHeightConstraint = self.heightAnchor.constraint(greaterThanOrEqualTo: label.heightAnchor, constant: -(textContainerInset.top + textContainerInset.bottom + textContainer.lineFragmentPadding + textContainer.lineFragmentPadding))
         placeholderLeadingConstraint = label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainerInset.left + textContainer.lineFragmentPadding)
         placeholderTrailingConstraint = self.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: textContainerInset.right + textContainer.lineFragmentPadding)
         placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor,constant: textContainerInset.top)
-        placeholderBottomConstraint = self.bottomAnchor.constraint(equalTo:  label.bottomAnchor,constant: textContainerInset.bottom)
+        placeholderBottomConstraint = label.bottomAnchor.constraint(greaterThanOrEqualTo: self.bottomAnchor, constant: 0)
+        
         placeholderLeadingConstraint?.isActive = true
         placeholderTrailingConstraint?.isActive = true
         placeholderTopConstraint?.isActive = true

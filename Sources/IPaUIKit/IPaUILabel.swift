@@ -10,6 +10,7 @@ import UIKit
 //@IBDesignable
 open class IPaUILabel: UILabel{
 //    @IBInspectable
+
     @objc public var bottomInset: CGFloat {
         get {
             return textInsets.bottom
