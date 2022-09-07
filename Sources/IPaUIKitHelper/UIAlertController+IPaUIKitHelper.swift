@@ -6,11 +6,13 @@
 //
 
 import UIKit
+@available(iOSApplicationExtension, unavailable)
 class IPaTextFieldInputAction: UIAlertAction {
     @objc func alertTextFieldDidChange(_ sender: UITextField) {
         self.isEnabled = (sender.text?.count ?? 0) > 0
     }
 }
+@available(iOSApplicationExtension, unavailable)
 extension UIAlertController {
     public class func presentAlertInput(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,onAddTextField:((UITextField)->())? = nil,confirm:String,confirmStyle:UIAlertAction.Style = .default ,confirmAction:@escaping (String)->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel,cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
