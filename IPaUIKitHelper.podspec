@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '13.0'
 
   
-  s.dependency 'IPaLog', '~> 3.0'
+  s.dependency 'IPaLog', '~> 3.1.0'
   # s.resource_bundles = {
   #   'IPaUIKitHelper' => ['IPaUIKitHelper/Assets/*.png']
   # }

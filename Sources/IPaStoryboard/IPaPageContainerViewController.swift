@@ -8,6 +8,9 @@
 import UIKit
 
 open class IPaPageContainerViewController: IPaContainerBaseViewController {
+    open var pageControllerOptions: [UIPageViewController.OptionsKey : Any]? {
+        return nil
+    }
     open var pageIdList = [String]()
     open var pageController:UIPageViewController?
     open var currentIdentifier:String? {
@@ -23,8 +26,9 @@ open class IPaPageContainerViewController: IPaContainerBaseViewController {
         self.initialPageController()
         // Do any additional setup after loading the view.
     }
+    
     fileprivate func initialPageController() {
-        let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: self.pageControllerOptions)
         pageController.delegate = self
         pageController.dataSource = self
         
