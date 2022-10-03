@@ -44,6 +44,9 @@ let package = Package(
         .library(
             name: "IPaToast",
             targets: ["IPaToast"])
+        .library(
+            name: "IPaNetworkState",
+            targets: ["IPaNetworkState"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -117,6 +120,11 @@ let package = Package(
             name: "IPaToast",
             dependencies: [],
             path:"Sources/IPaToast"
+        ),
+        .target(
+            name: "IPaNetworkState",
+            dependencies: [],
+            path:"Sources/IPaNetworkState"
         ),
         .testTarget(
             name: "IPaUIKitHelperTests",
