@@ -8,7 +8,7 @@
 import UIKit
 
 extension UICollectionView {
-    open func getCellIndexPath(contain view:UIView) -> IndexPath? {
+    public func getCellIndexPath(contain view:UIView) -> IndexPath? {
         var cell:UIView? = view
         repeat {
             cell = cell?.superview

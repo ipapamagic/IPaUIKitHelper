@@ -56,7 +56,7 @@ extension UITextView {
 
 }
 extension UITextView:IPaHasHTMLContent {
-    open func setHtmlContent(_ content:String,encoding:String.Encoding = .utf8,replacePtToPx:Bool = true) {
+    public func setHtmlContent(_ content:String,encoding:String.Encoding = .utf8,replacePtToPx:Bool = true) {
         var content = replacePtToPx ? self.replaceCSSPtToPx(with: content) : content
         content += "<style>img { max-width:\(self.bounds.size.width - self.leftInset - self.rightInset)px; height: auto !important; } </style>"
         

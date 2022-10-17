@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IPaUIKitHelper
 public enum IPaSlideInSubViewDirection:Int {
     case up = 0
     case down = 1

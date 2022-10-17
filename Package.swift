@@ -43,14 +43,19 @@ let package = Package(
             targets: ["IPaDataPager"]),
         .library(
             name: "IPaToast",
-            targets: ["IPaToast"])
+            targets: ["IPaToast"]),
         .library(
             name: "IPaNetworkState",
-            targets: ["IPaNetworkState"])
+            targets: ["IPaNetworkState"]),
+        .library(
+            name: "IPaTokenView",
+            targets: ["IPaTokenView"])
+        
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/ipapamagic/IPaLog.git", from: "3.1.0"),
         .package(url: "https://github.com/ipapamagic/IPaImageTool.git", from: "2.6.0"),
         .package(url: "https://github.com/ipapamagic/IPaFileCache.git", from: "1.2.0"),
         .package(url: "https://github.com/ipapamagic/IPaDownloadManager.git", from: "1.4.0"),
@@ -61,13 +66,15 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "IPaUIKitHelper",
-            dependencies: [.product(name: "IPaImageTool", package: "IPaImageTool")],
+            dependencies: [.product(name: "IPaImageTool", package: "IPaImageTool"),
+                           .product(name: "IPaLog", package: "IPaLog")],
             path:"Sources/IPaUIKitHelper"
         ),
         .target(
             name: "IPaImageURL",
             dependencies: [.product(name: "IPaDownloadManager", package: "IPaDownloadManager"),
-                                                .product(name: "IPaFileCache", package: "IPaFileCache")],
+                                                .product(name: "IPaFileCache", package: "IPaFileCache"),
+                                                .product(name: "IPaLog", package: "IPaLog")],
             path:"Sources/IPaImageURL"
         ),
         .target(
@@ -77,7 +84,7 @@ let package = Package(
         ),
         .target(
             name: "IPaFitContent",
-            dependencies: [],
+            dependencies: ["IPaUIKitHelper"],
             path:"Sources/IPaFitContent"
         ),
         .target(
@@ -92,7 +99,7 @@ let package = Package(
         ),
         .target(
             name: "IPaStoryboard",
-            dependencies: [],
+            dependencies: ["IPaUIKitHelper"],
             path:"Sources/IPaStoryboard"
         ),
         .target(
@@ -107,7 +114,7 @@ let package = Package(
         ),
         .target(
             name: "IPaProgressIndicator",
-            dependencies: [.product(name: "IPaDownloadManager", package: "IPaDownloadManager"),
+            dependencies: ["IPaIndicator",.product(name: "IPaDownloadManager", package: "IPaDownloadManager"),
                            .product(name: "IPaURLResourceUI", package: "IPaURLResourceUI"),],
             path:"Sources/IPaProgressIndicator"
         ),
@@ -118,7 +125,7 @@ let package = Package(
         ),
         .target(
             name: "IPaToast",
-            dependencies: [],
+            dependencies: ["IPaUIKit","IPaUIKitHelper"],
             path:"Sources/IPaToast"
         ),
         .target(
@@ -126,8 +133,13 @@ let package = Package(
             dependencies: [],
             path:"Sources/IPaNetworkState"
         ),
+        .target(
+            name: "IPaTokenView",
+            dependencies: [],
+            path:"Sources/IPaTokenView"
+        ),
         .testTarget(
             name: "IPaUIKitHelperTests",
-            dependencies: ["IPaUIKitHelper"]),
+            dependencies: ["IPaUIKitHelper"])
     ]
 )

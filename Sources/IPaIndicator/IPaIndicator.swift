@@ -11,7 +11,7 @@ import UIKit
     
 }
 @objc open class IPaIndicator: UIView {
-    lazy var indicatorBlackView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    public private (set) lazy var indicatorBlackView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     public var backgroundView:UIView {
         get {
             return indicatorBlackView
@@ -58,7 +58,7 @@ import UIKit
         super.init(coder: aDecoder)
         initialSetting()
     }
-    func initialSetting() {
+    open func initialSetting() {
         isUserInteractionEnabled = true
         backgroundColor = UIColor.clear
         indicatorBlackView.backgroundColor = UIColor(white: 0, alpha: 0.7)

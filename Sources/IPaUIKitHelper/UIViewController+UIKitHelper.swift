@@ -8,12 +8,12 @@
 import UIKit
 
 extension UIViewController {
-    open func easyRemoveFromParent() {
+    public func easyRemoveFromParent() {
         self.willMove(toParent: nil)
         self.view.removeFromSuperview()
         self.removeFromParent()
     }
-    open func easyAddChild(_ viewController:UIViewController,addSubView:((UIView)->())?) {
+    public func easyAddChild(_ viewController:UIViewController,addSubView:((UIView)->())?) {
         self.addChild(viewController)
         if let addSubView = addSubView {
             addSubView(viewController.view)

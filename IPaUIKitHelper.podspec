@@ -84,4 +84,7 @@ TODO: Add long description of the pod here.
   s.subspec 'IPaNetworkState' do |sp|
     sp.source_files = 'Sources/IPaNetworkState/**/*'
   end
+  s.subspec 'IPaTokenView' do |sp|
+    sp.source_files = 'Sources/IPaTokenView/**/*'
+  end
 end

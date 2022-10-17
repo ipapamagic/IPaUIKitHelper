@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import IPaUIKit
+import IPaUIKitHelper
 open class IPaToast: UIView {
     public lazy var toastLabel:IPaUILabel = {
         let label = IPaUILabel()

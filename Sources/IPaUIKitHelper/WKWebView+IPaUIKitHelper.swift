@@ -37,7 +37,7 @@ extension WKWebView {
     }
     
     
-    open func post(_ request:URLRequest,encoding: String.Encoding = .utf8) {
+    public func post(_ request:URLRequest,encoding: String.Encoding = .utf8) {
         guard let bodyData = request.httpBody,let bodyString = String(data: bodyData, encoding: encoding),let urlString = request.url?.absoluteString else {
             return
         }
@@ -113,32 +113,32 @@ extension WKWebView {
 }
 //Javascript helper
 extension WKWebView {
-    @inlinable open func postJSMessage(with source:String,messageName:String,errorHandle: ((Error)->())? = nil) {
+    @inlinable public func postJSMessage(with source:String,messageName:String,errorHandle: ((Error)->())? = nil) {
         self.evaluateJavaScript("window.webkit.messageHandlers.\(messageName).postMessage(\(source);") { (result, error) in
             if let error = error {
                 errorHandle?(error)
             }
         }
     }
-    @inlinable open func injectJSFile(_ fileUrl:URL) {
+    @inlinable public func injectJSFile(_ fileUrl:URL) {
         let data = try! Data(contentsOf: fileUrl)
         let jsString = String(data: data, encoding: .utf8)!
         self.injectJS(jsString)
     }
-    @inlinable open func injectJS(_ source:String) {
+    @inlinable public func injectJS(_ source:String) {
         //UserScript object
         let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
         //Content Controller object
         
         self.configuration.userContentController.addUserScript(script)
     }
-    @inlinable open func injectOnLoadJS(_ handler:WKScriptMessageHandler,messageName:String) {
+    @inlinable public func injectOnLoadJS(_ handler:WKScriptMessageHandler,messageName:String) {
         let source = "window.addEventListener(\"load\", function () {window.webkit.messageHandlers.\(messageName).postMessage({});}, false); "
         self.injectJS(source)
         //Add message handler reference
         self.configuration.userContentController.add(handler, name: messageName)
     }
-    @inlinable open func injectContentResizeJS(handler:WKScriptMessageHandler,messageName:String) {
+    @inlinable public func injectContentResizeJS(handler:WKScriptMessageHandler,messageName:String) {
         let source = "window.addEventListener(\"load\", function () {window.webkit.messageHandlers.\(messageName).postMessage({justLoaded:true,height: document.body.scrollHeight});}, false);  document.body.addEventListener( 'resize', onSizeChangeEvent); function onSizeChangeEvent() {window.webkit.messageHandlers.\(messageName).postMessage({height: document.body.scrollHeight});};"
         
         self.injectJS(source)
@@ -146,7 +146,7 @@ extension WKWebView {
         //Add message handler reference
         self.configuration.userContentController.add(handler, name: messageName)
     }
-    @inlinable open func textSizeJS(for ratio:Float) -> String {
+    @inlinable public func textSizeJS(for ratio:Float) -> String {
         return "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust = '\(ratio * 100)%'; if (typeof onSizeChangeEvent === \"function\") {onSizeChangeEvent()};"
     }
     @objc open func setJSTextSizeAdjust(_ ratio:Float,complete:((Any?,Error?)->Void)? = nil) {
@@ -154,10 +154,10 @@ extension WKWebView {
             complete?(result,error)
         }
     }
-    @inlinable open func injectTextSizeAdjust(_ ratio:Float) {
+    @inlinable public func injectTextSizeAdjust(_ ratio:Float) {
         self.injectJS(self.textSizeJS(for:ratio))
     }
-    @inlinable open func injectFitContentJS() {
+    @inlinable public func injectFitContentJS() {
         //fit content size script
         let js = "var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width initial-scale=1'); document.getElementsByTagName('head')[0].appendChild(meta);"
         //Content Controller object

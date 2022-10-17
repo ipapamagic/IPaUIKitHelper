@@ -16,7 +16,7 @@ extension UILabel:IPaHasHTMLContent {
         // Drawing code
     }
     */
-    open func setHtmlContent(_ content:String,encoding:String.Encoding = .utf8,replacePtToPx:Bool = true) {
+    public func setHtmlContent(_ content:String,encoding:String.Encoding = .utf8,replacePtToPx:Bool = true) {
         var content = replacePtToPx ? self.replaceCSSPtToPx(with: content) : content
         let rect = self.textRect(forBounds: self.bounds, limitedToNumberOfLines: self.numberOfLines)
         content += "<style>img { max-width:\(self.bounds.size.width - rect.width)px; height: auto !important; } </style>"

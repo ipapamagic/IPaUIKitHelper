@@ -8,7 +8,7 @@
 import UIKit
 
 extension UITableView {
-    open func headerViewFitContent() {
+    public func headerViewFitContent() {
         guard let headerView = self.tableHeaderView else {
             return
         }
@@ -17,7 +17,7 @@ extension UITableView {
         headerView.frame = CGRect(origin: .zero, size: size)
         self.tableHeaderView = headerView
     }
-    open func footerViewFitContent() {
+    public func footerViewFitContent() {
         guard let footerView = self.tableFooterView else {
             return
         }
@@ -26,7 +26,7 @@ extension UITableView {
         footerView.frame = CGRect(origin: .zero, size: size)
         self.tableFooterView = footerView
     }
-    open func getCellIndexPath(contain view:UIView) -> IndexPath? {
+    public func getCellIndexPath(contain view:UIView) -> IndexPath? {
         var cell:UIView? = view
         repeat {
             cell = cell?.superview

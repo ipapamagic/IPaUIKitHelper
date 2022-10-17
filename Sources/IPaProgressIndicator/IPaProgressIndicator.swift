@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import IPaIndicator
 @available(iOS 13.0, *)
 open class IPaProgressIndicator: IPaIndicator {
     var progressCancellable:AnyCancellable?
@@ -73,16 +74,16 @@ open class IPaProgressIndicator: IPaIndicator {
      // Drawing code
      }
      */
-    override func initialSetting() {
+    public override func initialSetting() {
         super.initialSetting()
         
         
-        indicatorBlackView.addSubview(contentStackView)
+        self.indicatorBlackView.addSubview(contentStackView)
         let viewDict = ["stackView":contentStackView] as [String : Any]
         var constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[stackView]-30-|", options: [], metrics: nil, views:viewDict)
-        indicatorBlackView.addConstraints(constraints)
+        self.indicatorBlackView.addConstraints(constraints)
         constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[stackView]-30-|", options: [], metrics: nil, views: viewDict)
-        indicatorBlackView.addConstraints(constraints)
+        self.indicatorBlackView.addConstraints(constraints)
         
         
         let view = UIView(frame: .zero)

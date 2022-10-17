@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import IPaUIKitHelper
 @objc public protocol IPaFitContentWebViewContainer {
     func onWebViewContentSizeUpdate(_ webView:IPaFitContentWebView)
 }
@@ -37,11 +38,7 @@ open class IPaWebViewOpenUrlHandler:NSObject,WKNavigationDelegate {
         return .cancel
     }
 }
-extension IPaNestedInnerScrollView:IPaFitContentWebViewContainer {
-    public func onWebViewContentSizeUpdate(_ webView: IPaFitContentWebView) {
-        self.layoutIfNeeded()
-    }
-}
+
 extension UITableView:IPaFitContentWebViewContainer {
     public func onWebViewContentSizeUpdate(_ webView: IPaFitContentWebView) {
         self.headerViewFitContent()

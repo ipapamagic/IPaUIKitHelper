@@ -132,7 +132,7 @@ extension UIView {
         self.layer.insertSublayer(gradient, at: 0)
         return gradient
     }
-    open func setBackgroundImage(_ image:UIImage,mode:UIView.ContentMode) {
+    public func setBackgroundImage(_ image:UIImage,mode:UIView.ContentMode) {
         var modifyImage:UIImage
         
         switch mode {
@@ -216,7 +216,7 @@ extension UIView {
         self.backgroundColor = UIColor(patternImage: modifyImage)
             
     }
-    open func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+    public func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let cornerMask = objc_getAssociatedObject(self, &roundCornerHandle) as? CAShapeLayer ?? CAShapeLayer()
 
@@ -245,12 +245,12 @@ extension UIView {
         }
         objc_setAssociatedObject(self, &sizeObserverHandle, sizeObserver, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
-    @inlinable open func setBorder(_ edge:UIRectEdge,width:CGFloat,color:UIColor)  {
+    @inlinable public func setBorder(_ edge:UIRectEdge,width:CGFloat,color:UIColor)  {
         
         self.setBorder([edge], width: width, color: color)
         
     }
-    open func setBorder(_ edges:[UIRectEdge],width:CGFloat,color:UIColor) {
+    public func setBorder(_ edges:[UIRectEdge],width:CGFloat,color:UIColor) {
         
         var path = UIBezierPath()
         let vSize = CGSize(width: self.bounds.width, height: 1)
@@ -299,7 +299,7 @@ extension UIView {
         self.addSizeObserver()
         
     }
-    open func addSubviewAlignSafeArea(_ view:UIView,edgeInsects:UIEdgeInsets) {
+    public func addSubviewAlignSafeArea(_ view:UIView,edgeInsects:UIEdgeInsets) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
         view.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: edgeInsects.top).isActive = true
@@ -307,7 +307,7 @@ extension UIView {
         view.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: edgeInsects.left).isActive = true
         view.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -edgeInsects.right).isActive = true
     }
-    open func addSubview(_ view:UIView,edgeInsects:UIEdgeInsets) {
+    public func addSubview(_ view:UIView,edgeInsects:UIEdgeInsets) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
         view.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsects.top).isActive = true
@@ -316,7 +316,7 @@ extension UIView {
         view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsects.right).isActive = true
     
     }
-    open func addSubviewToFill(_ view:UIView) {
+    public func addSubviewToFill(_ view:UIView) {
         self.addSubview(view,edgeInsects: .zero)
     }
 }

@@ -31,7 +31,7 @@ open class IPaActivityIndicator: IPaIndicator {
         return label
     }()
     
-    override func initialSetting() {
+    public override func initialSetting() {
         super.initialSetting()
         indicator.color = .white
         indicator.translatesAutoresizingMaskIntoConstraints = false
