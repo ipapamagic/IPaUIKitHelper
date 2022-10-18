@@ -11,46 +11,6 @@ let package = Package(
         .library(
             name: "IPaUIKitHelper",
             targets: ["IPaUIKitHelper"]),
-        .library(
-            name: "IPaImageURL",
-            targets: ["IPaImageURL"]),
-        .library(
-            name: "IPaButtonStyler",
-            targets: ["IPaButtonStyler"]),
-        .library(
-            name: "IPaFitContent",
-            targets: ["IPaFitContent"]),
-        .library(
-            name: "IPaUIKit",
-            targets: ["IPaUIKit"]),
-        .library(
-            name: "IPaNestedScrollView",
-            targets: ["IPaNestedScrollView"]),
-        .library(
-            name: "IPaStoryboard",
-            targets: ["IPaStoryboard"]),
-        .library(
-            name: "IPaPickerUI",
-            targets: ["IPaPickerUI"]),
-        .library(
-            name: "IPaIndicator",
-            targets: ["IPaIndicator"]),
-        .library(
-            name: "IPaProgressIndicator",
-            targets: ["IPaProgressIndicator"]),
-        .library(
-            name: "IPaDataPager",
-            targets: ["IPaDataPager"]),
-        .library(
-            name: "IPaToast",
-            targets: ["IPaToast"]),
-        .library(
-            name: "IPaNetworkState",
-            targets: ["IPaNetworkState"]),
-        .library(
-            name: "IPaTokenView",
-            targets: ["IPaTokenView"])
-        
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -67,77 +27,14 @@ let package = Package(
         .target(
             name: "IPaUIKitHelper",
             dependencies: [.product(name: "IPaImageTool", package: "IPaImageTool"),
-                           .product(name: "IPaLog", package: "IPaLog")],
+                           .product(name: "IPaLog", package: "IPaLog"),
+                           .product(name: "IPaFileCache", package: "IPaFileCache"),
+                           .product(name: "IPaDownloadManager", package: "IPaDownloadManager"),
+                           .product(name: "IPaURLResourceUI", package: "IPaURLResourceUI")],
             path:"Sources/IPaUIKitHelper"
         ),
-        .target(
-            name: "IPaImageURL",
-            dependencies: [.product(name: "IPaDownloadManager", package: "IPaDownloadManager"),
-                                                .product(name: "IPaFileCache", package: "IPaFileCache"),
-                                                .product(name: "IPaLog", package: "IPaLog")],
-            path:"Sources/IPaImageURL"
-        ),
-        .target(
-            name: "IPaButtonStyler",
-            dependencies: [],
-            path:"Sources/IPaButtonStyler"
-        ),
-        .target(
-            name: "IPaFitContent",
-            dependencies: ["IPaUIKitHelper"],
-            path:"Sources/IPaFitContent"
-        ),
-        .target(
-            name: "IPaUIKit",
-            dependencies: [],
-            path:"Sources/IPaUIKit"
-        ),
-        .target(
-            name: "IPaNestedScrollView",
-            dependencies: ["IPaFitContent"],
-            path:"Sources/IPaNestedScrollView"
-        ),
-        .target(
-            name: "IPaStoryboard",
-            dependencies: ["IPaUIKitHelper"],
-            path:"Sources/IPaStoryboard"
-        ),
-        .target(
-            name: "IPaPickerUI",
-            dependencies: [],
-            path:"Sources/IPaPickerUI"
-        ),
-        .target(
-            name: "IPaIndicator",
-            dependencies: [],
-            path:"Sources/IPaIndicator"
-        ),
-        .target(
-            name: "IPaProgressIndicator",
-            dependencies: ["IPaIndicator",.product(name: "IPaDownloadManager", package: "IPaDownloadManager"),
-                           .product(name: "IPaURLResourceUI", package: "IPaURLResourceUI"),],
-            path:"Sources/IPaProgressIndicator"
-        ),
-        .target(
-            name: "IPaDataPager",
-            dependencies: [],
-            path:"Sources/IPaDataPager"
-        ),
-        .target(
-            name: "IPaToast",
-            dependencies: ["IPaUIKit","IPaUIKitHelper"],
-            path:"Sources/IPaToast"
-        ),
-        .target(
-            name: "IPaNetworkState",
-            dependencies: [],
-            path:"Sources/IPaNetworkState"
-        ),
-        .target(
-            name: "IPaTokenView",
-            dependencies: [],
-            path:"Sources/IPaTokenView"
-        ),
+
+    
         .testTarget(
             name: "IPaUIKitHelperTests",
             dependencies: ["IPaUIKitHelper"])

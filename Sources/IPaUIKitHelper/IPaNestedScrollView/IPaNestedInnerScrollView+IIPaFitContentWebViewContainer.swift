@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import IPaFitContent
 extension IPaNestedInnerScrollView:IPaFitContentWebViewContainer {
     public func onWebViewContentSizeUpdate(_ webView: IPaFitContentWebView) {
         self.layoutIfNeeded()

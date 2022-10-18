@@ -7,7 +7,7 @@
 
 import UIKit
 import WebKit
-import IPaUIKitHelper
+
 @objc public protocol IPaFitContentWebViewContainer {
     func onWebViewContentSizeUpdate(_ webView:IPaFitContentWebView)
 }
