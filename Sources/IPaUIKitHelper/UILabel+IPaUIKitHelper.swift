@@ -16,13 +16,13 @@ extension UILabel:IPaHasHTMLContent {
         // Drawing code
     }
     */
-    public func setHtmlContent(_ content:String,encoding:String.Encoding = .utf8,replacePtToPx:Bool = true) {
+    public func setHtmlContent(_ content:String,dataEncoding:String.Encoding = .utf8,contentEncoding:String.Encoding = .utf8, replacePtToPx:Bool = true) {
         var content = replacePtToPx ? self.replaceCSSPtToPx(with: content) : content
         let rect = self.textRect(forBounds: self.bounds, limitedToNumberOfLines: self.numberOfLines)
         content += "<style>img { max-width:\(self.bounds.size.width - rect.width)px; height: auto !important; } </style>"
         
         
-        if let data = content.data(using: encoding) ,let attributedText = try? NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType:NSAttributedString.DocumentType.html], documentAttributes: nil) {
+        if let data = content.data(using: dataEncoding) ,let attributedText = try? NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType:NSAttributedString.DocumentType.html,NSAttributedString.DocumentReadingOptionKey.characterEncoding: contentEncoding.rawValue], documentAttributes: nil) {
             //fit image to content .... css not work ,need to do it yourself
 //            let maxWidth = self.bounds.width
 //            let text = NSMutableAttributedString(attributedString: attributedText)
