@@ -226,7 +226,7 @@ extension UIView {
         layer.mask = cornerMask
         
         objc_setAssociatedObject(self, &roundCornerRadiusHandle, radius, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
-        objc_setAssociatedObject(self, &roundCornerHandle, corners, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        objc_setAssociatedObject(self, &roundCornerHandle, corners.rawValue, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
         objc_setAssociatedObject(self, &roundCornerMaskHandle, cornerMask, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
         self.addSizeObserver()
     }
@@ -237,7 +237,8 @@ extension UIView {
         
         //mark observe frame or bounds is not working sometimes....,so observe center instead
         let sizeObserver = self.observe(\.center) { view, value in
-            if let corners = objc_getAssociatedObject(self, &roundCornerHandle) as? UIRectCorner,let radius = objc_getAssociatedObject(self, &roundCornerRadiusHandle) as? CGFloat {
+            if let cornersInt = objc_getAssociatedObject(self, &roundCornerHandle) as? UInt,let radius = objc_getAssociatedObject(self, &roundCornerRadiusHandle) as? CGFloat {
+                let corners = UIRectCorner(rawValue: cornersInt) 
                 self.roundCorners(corners: corners, radius: radius)
             }
             if let (_,edges,width,color) = objc_getAssociatedObject(self, &borderHandle) as? (CAShapeLayer,[UIRectEdge],CGFloat,UIColor) {
