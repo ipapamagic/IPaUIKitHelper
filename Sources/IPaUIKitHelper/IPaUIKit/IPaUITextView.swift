@@ -23,7 +23,11 @@ open class IPaUITextView: UITextView {
             placeholderLabel.text = newValue
             placeholderLabel.layoutIfNeeded()
         }
-        
+    }
+    @objc override open var text: String! {
+        didSet {
+            placeholderLabel.isHidden = self.hasText
+        }
     }
     //@IBInspectable
     @objc open var placeholderColor:UIColor
