@@ -23,7 +23,7 @@ open class IPaButtonStyler:NSObject {
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         button.layoutIfNeeded()
     }
-    open func reloadStyle(_ button:UIButton) {
+    @objc open func reloadStyle(_ button:UIButton) {
         
     }
     
