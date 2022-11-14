@@ -65,20 +65,12 @@ public class IPaSlideInSubviewController: NSObject {
         
         self.destination.view.translatesAutoresizingMaskIntoConstraints = false
         self.prepare()
-        for constraint in self.showConstraints {
-            constraint.isActive = false
-        }
-        for constraint in self.hideConstraints {
-            constraint.isActive = true
-        }
-        source.view.layoutIfNeeded()
         
-        for constraint in self.hideConstraints {
-            constraint.isActive = false
-        }
-        for constraint in self.showConstraints {
-            constraint.isActive = true
-        }
+        NSLayoutConstraint.deactivate(self.showConstraints)
+        NSLayoutConstraint.activate(self.hideConstraints)
+        source.view.layoutIfNeeded()
+        NSLayoutConstraint.deactivate(self.hideConstraints)
+        NSLayoutConstraint.activate(self.showConstraints)
         
         UIView.animate(withDuration: self.animationDuration) {
             self.source.view.layoutIfNeeded() 
@@ -86,12 +78,8 @@ public class IPaSlideInSubviewController: NSObject {
         
     }
     @objc public func dismissTransition() {
-        for constraint in self.showConstraints {
-            constraint.isActive = false
-        }
-        for constraint in self.hideConstraints {
-            constraint.isActive = true
-        }
+        NSLayoutConstraint.deactivate(self.showConstraints)
+        NSLayoutConstraint.activate(self.hideConstraints)
         UIView.animate(withDuration: self.animationDuration,animations: {
             self.source.view.layoutIfNeeded()
         }) { finished in
