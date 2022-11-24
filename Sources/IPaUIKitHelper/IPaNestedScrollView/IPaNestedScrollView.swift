@@ -70,8 +70,8 @@ open class IPaNestedScrollView: UIScrollView,UIGestureRecognizerDelegate {
             childRect = self.convert(childView.bounds, from: childView)
             childRect = childRect.inset(by: self.childEdgeInsets)
         }
-        
-        
+        childRect.size.width = min(self.contentSize.width,childRect.maxX) - childRect.minX - 0.1
+        childRect.size.height = min(self.contentSize.height,childRect.maxY) - childRect.minY - 0.1
         if containerRect.contains(childRect) {
             self.simultaneouslyOtherGesture = true
             childView.isScrollEnabled = true
@@ -82,28 +82,13 @@ open class IPaNestedScrollView: UIScrollView,UIGestureRecognizerDelegate {
             else {
                 childScrollView?.simultaneouslyOtherGesture = false
                 self.isScrollEnabled = false
-//                let point = childRect.origin
-//                if self.contentOffset != point {
-//                    self.contentOffset = point
-//                }
             }
-            
-        
-            
-            
         }
         else {
             childView.isScrollEnabled = false
             childScrollView?.simultaneouslyOtherGesture = false
             self.isScrollEnabled = true
             self.simultaneouslyOtherGesture = false
-//            let x = (childRect.minX < self.contentOffset.x) ?  childView.contentSize.width - childView.bounds.width : 0
-//
-//            let y = (childRect.minY < self.contentOffset.y) ?  childView.contentSize.height - childView.bounds.height : 0
-//            let point = CGPoint(x: x, y: y)
-//            if point != childView.contentOffset {
-//                childView.contentOffset = point
-//            }
         }
       
     }

@@ -42,15 +42,18 @@ extension UIAlertController {
     public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        alertController.addAction(title: confirm,style: confirmStyle) { action in
-            confirmAction?()
-        }
+        
         if let cancel = cancel {
             alertController.addAction(title: cancel,style: cancelStyle) { action in
                 cancelAction?()
             }
         }
-        var presentVC = viewController ?? UIApplication.shared.rootViewController!
+        alertController.addAction(title: confirm,style: confirmStyle) { action in
+            confirmAction?()
+        }
+        guard var presentVC = viewController ?? UIApplication.shared.rootViewController else {
+            return
+        }
         while let presentedVC = presentVC.presentedViewController {
             presentVC = presentedVC
         }
