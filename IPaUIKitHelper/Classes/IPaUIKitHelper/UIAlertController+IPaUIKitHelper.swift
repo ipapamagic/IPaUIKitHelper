@@ -48,7 +48,9 @@ extension UIAlertController {
                 cancelAction?()
             }
         }
-        var presentVC = viewController ?? UIApplication.shared.rootViewController!
+        guard var presentVC = viewController ?? UIApplication.shared.rootViewController else {
+            return
+        }
         while let presentedVC = presentVC.presentedViewController {
             presentVC = presentedVC
         }
