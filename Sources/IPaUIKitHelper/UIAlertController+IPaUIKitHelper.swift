@@ -14,7 +14,7 @@ class IPaTextFieldInputAction: UIAlertAction {
 }
 @available(iOSApplicationExtension, unavailable)
 extension UIAlertController {
-    public class func presentAlertInput(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,onAddTextField:((UITextField)->())? = nil,confirm:String,confirmStyle:UIAlertAction.Style = .default ,confirmAction:@escaping (String)->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel,cancelAction:(()->())? = nil) {
+    public class func presentAlertInput(from viewController:UIViewController = UIApplication.shared.rootViewController!,title:String?,message:String?,onAddTextField:((UITextField)->())? = nil,confirm:String,confirmStyle:UIAlertAction.Style = .default ,confirmAction:@escaping (String)->(),cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel,cancelAction:(()->())? = nil,preferCancel:Bool = false) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let action = IPaTextFieldInputAction(title: confirm, style: confirmStyle, handler: { action in
@@ -25,8 +25,11 @@ extension UIAlertController {
             confirmAction(text)
         })
         alertController.addAction(action)
+        if (!preferCancel) {
+            alertController.preferredAction = action
+        }
         if let cancel = cancel {
-            alertController.addAction(title: cancel,style: cancelStyle) { action in
+            alertController.addAction(title: cancel,style: cancelStyle,preferAction: preferCancel) { action in
                 cancelAction?()
             }
         }
@@ -39,16 +42,14 @@ extension UIAlertController {
         viewController.present(alertController, animated: true)
         
     }
-    public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil) {
+    public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil,preferCancel:Bool = false) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        
         if let cancel = cancel {
-            alertController.addAction(title: cancel,style: cancelStyle) { action in
+            alertController.addAction(title: cancel,style: cancelStyle,preferAction: preferCancel) { action in
                 cancelAction?()
             }
         }
-        alertController.addAction(title: confirm,style: confirmStyle) { action in
+        alertController.addAction(title: confirm,style: confirmStyle,preferAction: !preferCancel) { action in
             confirmAction?()
         }
         guard var presentVC = viewController ?? UIApplication.shared.rootViewController else {
@@ -60,7 +61,11 @@ extension UIAlertController {
         presentVC.present(alertController, animated: true)
     }
     
-    @inlinable public func addAction(title:String,style:UIAlertAction.Style = .default,handler:((UIAlertAction)->())? = nil) {
-        self.addAction(UIAlertAction(title: title, style: style, handler:handler))
+    @inlinable public func addAction(title:String,style:UIAlertAction.Style = .default,preferAction:Bool = false,handler:((UIAlertAction)->())? = nil) {
+        let action = UIAlertAction(title: title, style: style, handler:handler)
+        self.addAction(action)
+        if preferAction {
+            self.preferredAction = action
+        }
     }
 }
