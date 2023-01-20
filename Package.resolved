@@ -50,7 +50,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ipapamagic/IPaURLResourceUI.git",
       "state" : {
-        "revision" : "be93e8b983e0372cae5209d6280e22af2a9e0060",
+        "revision" : "41f659261c3705e30f58c44deaeb70a9309c22c6",
         "version" : "5.4.0"
       }
     },
