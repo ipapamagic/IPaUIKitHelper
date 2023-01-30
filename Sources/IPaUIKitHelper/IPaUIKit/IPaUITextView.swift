@@ -87,8 +87,8 @@ open class IPaUITextView: UITextView {
         setNeedsDisplay()
         return label
     }()
-    var textChangedObserver:NSObjectProtocol?
-    var placeholderAnyCancellable:AnyCancellable?
+    var textChangedAnyCancellable:AnyCancellable?
+//    var placeholderAnyCancellable:AnyCancellable?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -111,20 +111,13 @@ open class IPaUITextView: UITextView {
     }
     func addTextChangeObserver() {
         
-        textChangedObserver = NotificationCenter.default.addObserver(forName: UITextView.textDidChangeNotification, object: self, queue: nil, using: {
-            noti in
+        textChangedAnyCancellable = NotificationCenter.default.publisher(for: UITextView.textDidChangeNotification,object: self).sink(receiveValue: { notification in
             self.layoutIfNeeded()
             self.placeholderLabel.isHidden = self.hasText
         })
-        placeholderAnyCancellable = self.placeholderLabel.publisher(for: \.text).sink(receiveValue: {
-            text in
-            self.layoutIfNeeded()
-        })
+        
     }
     deinit {
-        if let textChangedObserver = textChangedObserver {
-            NotificationCenter.default.removeObserver(textChangedObserver)
-        }
         
         //        removeObserver(self, forKeyPath: "font")
         //        removeObserver(self, forKeyPath: "text")

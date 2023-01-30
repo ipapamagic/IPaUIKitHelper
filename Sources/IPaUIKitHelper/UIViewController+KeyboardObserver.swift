@@ -10,7 +10,7 @@ private var keyboardDelegateHandle: UInt8 = 0
 class IPaKeyboardTapDelegation:NSObject,UIGestureRecognizerDelegate {
     static var shared = IPaKeyboardTapDelegation()
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        let isControllTapped = touch.view is UIControl
+        let isControllTapped = (touch.view is UIControl) || (touch.view is UIKeyInput)
         return !isControllTapped
     }
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
