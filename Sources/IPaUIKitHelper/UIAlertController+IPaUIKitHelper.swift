@@ -42,8 +42,8 @@ extension UIAlertController {
         viewController.present(alertController, animated: true)
         
     }
-    public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil,preferCancel:Bool = false) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    @inlinable public class func present(from viewController:UIViewController? = nil,title:String?,message:String?,style: UIAlertController.Style, confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil,preferCancel:Bool = false) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
         if let cancel = cancel {
             alertController.addAction(title: cancel,style: cancelStyle,preferAction: preferCancel) { action in
                 cancelAction?()
@@ -59,6 +59,12 @@ extension UIAlertController {
             presentVC = presentedVC
         }
         presentVC.present(alertController, animated: true)
+    }
+    public class func presentAlert(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil,preferCancel:Bool = false) {
+        self.present(from:viewController,title:title, message: message, style: .alert, confirm: confirm,confirmStyle: confirmStyle,confirmAction: confirmAction,cancel:cancel,cancelStyle: cancelStyle,cancelAction: cancelAction,preferCancel: preferCancel)
+    }
+    public class func presentSheet(from viewController:UIViewController? = nil,title:String?,message:String?,confirm:String,confirmStyle:UIAlertAction.Style = .default,confirmAction:(()->())? = nil,cancel:String? = nil,cancelStyle:UIAlertAction.Style = .cancel, cancelAction:(()->())? = nil,preferCancel:Bool = false) {
+        self.present(from:viewController,title:title, message: message, style: .actionSheet, confirm: confirm,confirmStyle: confirmStyle,confirmAction: confirmAction,cancel:cancel,cancelStyle: cancelStyle,cancelAction: cancelAction,preferCancel: preferCancel)
     }
     
     @inlinable public func addAction(title:String,style:UIAlertAction.Style = .default,preferAction:Bool = false,handler:((UIAlertAction)->())? = nil) {

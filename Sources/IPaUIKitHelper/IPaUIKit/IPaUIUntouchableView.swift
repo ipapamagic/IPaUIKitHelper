@@ -18,9 +18,14 @@ open class IPaUIUntouchableView: UIView {
     lazy var touchableViews = [UIView]()
     public var touchMode = TouchMode.untouchable
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        for tView in touchableViews {
+        
+        for index in 0 ..< touchableViews.count {
+            let viewIdx = touchableViews.count - index - 1
+            let tView = touchableViews[viewIdx]
             let point = self.convert(point, to: tView)
             if let hitView = tView.hitTest(point, with: event) {
+                touchableViews.remove(at: viewIdx)
+                touchableViews.append(tView)
                 return hitView
             }
         }
@@ -37,6 +42,7 @@ open class IPaUIUntouchableView: UIView {
         // Drawing code
     }
     */
+   
     public func addTouchableView(_ view:UIView) {
         guard view != self ,!self.touchableViews.contains(view) else {
             return
