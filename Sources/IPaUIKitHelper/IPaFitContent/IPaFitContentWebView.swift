@@ -12,6 +12,7 @@ import WebKit
     func onWebViewContentSizeUpdate(_ webView:IPaFitContentWebView)
 }
 // IPaWebViewOpenUrlHandler is for WKNavigationDelegate,that will use open url to open link
+@available(iOSApplicationExtension, unavailable)
 open class IPaWebViewOpenUrlHandler:NSObject,WKNavigationDelegate {
     public override init() {
         super.init()

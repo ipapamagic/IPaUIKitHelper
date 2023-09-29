@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+@available(iOSApplicationExtension, unavailable)
 open class IPaReplaceRootSegue: UIStoryboardSegue {
     override open func perform() {
         let window = UIApplication.shared.mainWindow
