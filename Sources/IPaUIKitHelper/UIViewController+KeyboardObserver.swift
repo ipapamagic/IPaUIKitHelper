@@ -16,7 +16,8 @@ class IPaKeyboardTapDelegation:NSObject,UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
+    
+    
 }
 public extension UIViewController {
     
@@ -27,6 +28,19 @@ public extension UIViewController {
         // Drawing code
     }
     */
+    fileprivate func _findAllTextInputViews(in view: UIView) -> [UIView]? {
+        var textInputViews = [UIView]()
+        for subview in view.subviews {
+            if subview is UITextView || subview is UITextField {
+                textInputViews.append(subview)
+            } else {
+                if let nestedTextInputViews = _findAllTextInputViews(in: subview) {
+                    textInputViews.append(contentsOf: nestedTextInputViews)
+                }
+            }
+        }
+        return textInputViews.isEmpty ? nil : textInputViews
+    }
     fileprivate func _getKeyboardObserverView() -> UIScrollView? {
         
         guard let firstScrollView = self.view.subviews.first(where: { (subView) -> Bool in
@@ -46,7 +60,18 @@ public extension UIViewController {
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = IPaKeyboardTapDelegation.shared
         targetView!.addGestureRecognizer(tapGesture)
-        
+        if let allTextInputViews = _findAllTextInputViews(in: targetView!) {
+            for textInputView in allTextInputViews {
+                // require
+                guard let recognizers = textInputView.gestureRecognizers else {
+                    continue
+                }
+                for recognizer in recognizers {
+                    tapGesture.require(toFail: recognizer)
+                }
+                
+            }
+        }
     }
     @objc func onTapToDismissKeyboard(_ sender:Any) {
         self.view.endEditing(true)
