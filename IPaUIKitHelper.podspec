@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IPaUIKitHelper'
-  s.version          = '1.3.0'
+  s.version          = '1.3.1'
   s.summary          = 'as Name , this is a UIKit helper, there some helper function for easily use with UIKit'
 
 # This description is used to generate tags and improve search results.
@@ -32,9 +32,9 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'Sources/IPaUIKitHelper/**/*'
   s.dependency 'IPaLog', '~> 3.1.0'
-  s.dependency 'IPaImageTool', '~> 2.3'
-  s.dependency 'IPaDownloadManager', '~> 1.3'
-  s.dependency 'IPaFileCache', '~> 1.1'
+  s.dependency 'IPaImageTool', '~> 2.6.0'
+  s.dependency 'IPaDownloadManager', '~> 1.4.0'
+  s.dependency 'IPaFileCache', '~> 1.2.0'
   # s.resource_bundles = {
   #   'IPaUIKitHelper' => ['IPaUIKitHelper/Assets/*.png']
   # }
