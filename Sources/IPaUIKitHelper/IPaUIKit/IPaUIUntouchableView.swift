@@ -24,8 +24,6 @@ open class IPaUIUntouchableView: UIView {
             let tView = touchableViews[viewIdx]
             let point = self.convert(point, to: tView)
             if let hitView = tView.hitTest(point, with: event) {
-                touchableViews.remove(at: viewIdx)
-                touchableViews.append(tView)
                 return hitView
             }
         }
