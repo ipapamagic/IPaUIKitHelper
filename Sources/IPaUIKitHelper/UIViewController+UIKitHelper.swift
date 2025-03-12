@@ -24,4 +24,14 @@ extension UIViewController {
         }
         viewController.willMove(toParent: self)
     }
+    public func dismissAll(animated: Bool, completion: (() -> Void)? = nil) {
+        if let presentedVC = self.presentedViewController {
+            presentedVC.dismissAll(animated: animated, completion: {
+                self.dismiss(animated: animated,completion: completion)
+            })
+        }
+        else {
+            self.dismiss(animated: animated,completion: completion)
+        }
+    }
 }

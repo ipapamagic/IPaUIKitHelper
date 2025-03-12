@@ -61,8 +61,9 @@ open class IPaUITextView: UITextView {
     var placeholderTopConstraint:NSLayoutConstraint?
     var placeholderTrailingConstraint:NSLayoutConstraint?
     var placeholderBottomConstraint:NSLayoutConstraint?
-    var placeholderWidthConstraint:NSLayoutConstraint?
+//    var placeholderWidthConstraint:NSLayoutConstraint?
     var placeholderHeightConstraint:NSLayoutConstraint?
+    var hasTextAnyCancellable:AnyCancellable?
     lazy var placeholderLabel:UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -71,23 +72,23 @@ open class IPaUITextView: UITextView {
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         self.addSubview(label)
-        placeholderWidthConstraint = label.widthAnchor.constraint(equalTo: self.widthAnchor,constant: -(textContainerInset.left + textContainer.lineFragmentPadding + textContainerInset.right + textContainer.lineFragmentPadding))
-        placeholderHeightConstraint = self.heightAnchor.constraint(greaterThanOrEqualTo: label.heightAnchor, constant: (textContainerInset.top + textContainerInset.bottom + textContainer.lineFragmentPadding + textContainer.lineFragmentPadding))
+//        self.placeholderWidthConstraint = label.widthAnchor.constraint(equalTo: self.widthAnchor,constant: -self.textContainerInset.right - self.textContainer.lineFragmentPadding - self.textContainerInset.left - self.textContainer.lineFragmentPadding)
+        self.placeholderHeightConstraint = self.heightAnchor.constraint(greaterThanOrEqualTo: label.heightAnchor, constant: (textContainerInset.top + textContainerInset.bottom + textContainer.lineFragmentPadding + textContainer.lineFragmentPadding))
         placeholderLeadingConstraint = label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainerInset.left + textContainer.lineFragmentPadding)
-        placeholderTrailingConstraint = self.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: textContainerInset.right + textContainer.lineFragmentPadding)
-        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor,constant: textContainerInset.top)
-        placeholderBottomConstraint = self.bottomAnchor.constraint(greaterThanOrEqualTo: label.bottomAnchor, constant: 0)
+        placeholderTrailingConstraint = self.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: -self.textContainerInset.right - self.textContainer.lineFragmentPadding)
+        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor,constant: self.textContainerInset.top)
+        placeholderBottomConstraint = self.bottomAnchor.constraint(greaterThanOrEqualTo: label.bottomAnchor, constant: self.textContainerInset.bottom)
         
         placeholderLeadingConstraint?.isActive = true
         placeholderTrailingConstraint?.isActive = true
         placeholderTopConstraint?.isActive = true
         placeholderBottomConstraint?.isActive = true
-        placeholderWidthConstraint?.isActive = true
+//        placeholderWidthConstraint?.isActive = true
         placeholderHeightConstraint?.isActive = true
         setNeedsDisplay()
         return label
     }()
-    var textChangedAnyCancellable:AnyCancellable?
+//    var textChangedAnyCancellable:AnyCancellable?
 //    var placeholderAnyCancellable:AnyCancellable?
     /*
     // Only override draw() if you perform custom drawing.
@@ -110,11 +111,21 @@ open class IPaUITextView: UITextView {
         
     }
     func addTextChangeObserver() {
-        
-        textChangedAnyCancellable = NotificationCenter.default.publisher(for: UITextView.textDidChangeNotification,object: self).sink(receiveValue: { notification in
-            self.layoutIfNeeded()
-            self.placeholderLabel.isHidden = self.hasText
+        self.hasTextAnyCancellable = self.publisher(for: \.hasText).sink(receiveValue: {
+            [weak self]  hasText in
+            self?.placeholderLabel.isHidden = hasText
         })
+//        textChangedAnyCancellable = NotificationCenter.default.publisher(for: UITextView.textDidChangeNotification,object: self).sink(receiveValue: { notification in
+//            self.placeholderLabel.isHidden = self.hasText
+//            
+//            self.placeholderLeadingConstraint?.constant = self.textContainerInset.left + self.textContainer.lineFragmentPadding
+//            self.placeholderTopConstraint?.constant = self.textContainerInset.top
+//            self.placeholderBottomConstraint?.constant = self.textContainerInset.bottom
+//            self.placeholderTrailingConstraint?.constant = -self.textContainerInset.right - self.textContainer.lineFragmentPadding
+//            
+//            self.placeholderWidthConstraint?.constant = -self.textContainerInset.right - self.textContainer.lineFragmentPadding - self.textContainerInset.left - self.textContainer.lineFragmentPadding
+            
+//        })
         
     }
     deinit {
@@ -126,18 +137,18 @@ open class IPaUITextView: UITextView {
         //        removeObserver(self, forKeyPath: "textContainerInset")
     }
    
-    override open func draw(_ rect: CGRect) {
-        //return if hasText
-        placeholderLabel.isHidden = self.hasText
-        
-        placeholderLeadingConstraint?.constant = textContainerInset.left + textContainer.lineFragmentPadding
-        placeholderTopConstraint?.constant = textContainerInset.top
-        placeholderBottomConstraint?.constant = textContainerInset.bottom
-        placeholderTrailingConstraint?.constant = -textContainerInset.right - textContainer.lineFragmentPadding
-        
-        placeholderWidthConstraint?.constant = -textContainerInset.right - textContainer.lineFragmentPadding - textContainerInset.left - textContainer.lineFragmentPadding
-
-    }
+//    override open func draw(_ rect: CGRect) {
+//        //return if hasText
+//        placeholderLabel.isHidden = self.hasText
+//        
+//        placeholderLeadingConstraint?.constant = textContainerInset.left + textContainer.lineFragmentPadding
+//        placeholderTopConstraint?.constant = textContainerInset.top
+//        placeholderBottomConstraint?.constant = textContainerInset.bottom
+//        placeholderTrailingConstraint?.constant = -textContainerInset.right - textContainer.lineFragmentPadding
+//        
+//        placeholderWidthConstraint?.constant = -textContainerInset.right - textContainer.lineFragmentPadding - textContainerInset.left - textContainer.lineFragmentPadding
+//
+//    }
 
     override open func caretRect(for position: UITextPosition) -> CGRect {
         var superRect = super.caretRect(for:position)
@@ -149,11 +160,6 @@ open class IPaUITextView: UITextView {
         // so to add its height you must subtract its value
         
         return superRect
-//        if caretHeight == 0 {
-//            return superRect
-//        }
-//        superRect.size.height = caretHeight
-//        return superRect
     }
     
     

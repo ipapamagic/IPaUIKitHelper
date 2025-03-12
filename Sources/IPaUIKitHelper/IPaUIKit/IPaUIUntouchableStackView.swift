@@ -1,5 +1,5 @@
 //
-//  IPaUntouchableStackView.swift
+//  IPaUIUntouchableStackView.swift
 //  IPaUIKitHelper
 //
 //  Created by IPa Chen on 2023/1/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class IPaUntouchableStackView: UIStackView {
+class IPaUIUntouchableStackView: UIStackView {
 
     /*
     // Only override draw() if you perform custom drawing.
